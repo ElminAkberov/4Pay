@@ -59,7 +59,7 @@ const Sidebar = ({ isMenuOpen }) => {
   return (
     <aside
       className={`fixed h-full w-[300px] bg-white z-50 duration-300 ${
-        isMenuOpen ? "left-[-300px]" : "left-0"
+        !isMenuOpen ? "left-[-300px]" : "left-0"
       } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
     >
       <ul className="p-5">
