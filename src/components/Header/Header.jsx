@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
 import "../../global.css";
-import { NavLink } from "react-router-dom";
 import { CgMenu } from "react-icons/cg";
+import { NavLink } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
+import React, { useEffect, useRef, useState } from "react";
 
 const Header = ({ setIsMenuOpen, isMenuOpen }) => {
   const [headerContent, setHeaderContent] = useState(false);
@@ -15,7 +15,6 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
         setHeaderContent(false);
       }
     };
-    console.log(menuRef.current)  
     document.addEventListener("click", handleClickOutside);
 
     return () => {
