@@ -34,3 +34,6 @@ body {
 input:disabled {
   background-color: #e9ecef;
 }
+.custom-table tr.p-datatable-emptymessage {
+  display: none !important;
+}

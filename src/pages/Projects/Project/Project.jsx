@@ -1,5 +1,4 @@
 import React from "react";
-import "./project.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 const Project = () => {

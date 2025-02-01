@@ -1,7 +1,6 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React from "react";
-import '../../payment.css'
 
 const PaymentList = () => {
   return (
