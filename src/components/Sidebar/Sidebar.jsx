@@ -42,14 +42,9 @@ const Sidebar = ({ isMenuOpen }) => {
   ];
 
   const handleClick = (menuName) => {
-    setSelectedMenu((prev) => {
-      const updatedMenu = {};
-      for (let key in prev) {
-        updatedMenu[key] = false;
-      }
-      updatedMenu[menuName] = true;
-      return updatedMenu;
-    });
+    setSelectedMenu((prev) => ({
+      [menuName]: !prev[menuName] ? true : false,
+    }));
   };
 
   const isActiveMenu = (menuLinks) => {
