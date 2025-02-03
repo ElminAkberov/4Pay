@@ -1,0 +1,88 @@
+stages:
+  - prepare
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG:
+    description: "Tag (version) for deploy"
+    value: "v1.2.50"
+  TIER:
+    description: "Tier for deploy"
+    value: "development"
+
+prepare:
+  image: alpine:3.18
+  stage: prepare
+  tags:
+    - docker
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      variables:
+        IMAGE_TAG: $CI_COMMIT_TAG
+        TIER: development
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      variables:
+        TIER: production
+  script:
+    - |
+      echo "IMAGE_TAG=$IMAGE_TAG" >> build.env
+      echo "TIER=$TIER" >> build.env
+    - echo "Prepare pipeline with $TIER tier with image tag $IMAGE_TAG"
+  artifacts:
+    reports:
+      dotenv: build.env
+
+build:
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  stage: build
+  needs:
+    - prepare
+  dependencies:
+    - prepare
+  tags:
+    - docker
+  rules:
+    - if: '$CI_COMMIT_TAG'
+  before_script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+  script:
+    - echo "Starting web build"
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --destination $CI_REGISTRY_IMAGE/development:$IMAGE_TAG
+    - /kaniko/executor
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --destination $CI_REGISTRY_IMAGE/production:$IMAGE_TAG
+    - echo "Web build completed"
+
+deploy:
+  image:
+    name: alpine/helm:3.13.3
+    entrypoint: [ "" ]
+  stage: deploy
+  needs:
+    - prepare
+  dependencies:
+    - prepare
+  tags:
+    - docker
+  rules:
+    - if: '$CI_COMMIT_TAG'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  before_script:
+    - export KUBECONFIG=$KUBECONFIG
+    - chmod 600 /builds/4pay1/payment-web.tmp/KUBECONFIG
+  script:
+    - echo "Starting deployment"
+    - helm upgrade --install payment-web ./deploy/main --namespace $TIER -f ./deploy/$TIER/values.yaml --set image.repository=$CI_REGISTRY_IMAGE/$TIER --set image.tag=$IMAGE_TAG
+    - echo "Deployment completed"
+  environment:
+    name: $TIER
+    kubernetes:
+      namespace: $TIER

@@ -1,0 +1,13 @@
+image:
+  repository: registry.gitlab.com/4pay1/payment-web/development
+  tag: "v1.2.34"
+
+base:
+  host: "4pay.win"
+
+pay_web:
+  replicas: 1
+  command:
+    - /bin/sh
+    - -c
+    - npm run start -- --host 0.0.0.0 -d --mode development

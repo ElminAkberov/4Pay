@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pay-web
+spec:
+  replicas: {{ .Values.pay_web.replicas }}
+  selector:
+    matchLabels:
+      app: pay-web
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: pay-web
+        version: v1
+        istio: monitor
+    spec:
+      initContainers:
+        - name: rm-env
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          command: [ 'sh', '-c', 'rm -rf /app/.env.production' ]
+      containers:
+      - name: pay-web
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+          - containerPort: 80
+        imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gitlab
+
