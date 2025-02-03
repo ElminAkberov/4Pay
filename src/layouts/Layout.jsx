@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
