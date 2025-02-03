@@ -27,19 +27,14 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-x-[10px]">
           <NavLink className="flex items-center gap-x-[6px] min-[1200px]:w-[280px]">
-            <img
-              src="/assets/logo/logo.png"
-              className="w-[25px] ml-1 inline"
-              alt=""
-            />
-            <span className="nunito font-bold text-[#012970] text-[26px] max-[991px]:hidden">
-              RoyalFinance
+            <span className="nunito font-bold text-[#19205c] text-[26px] max-[991px]:hidden">
+              4Pay
             </span>
           </NavLink>
           <CgMenu
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             size={38}
-            color="#012970"
+            color="#bfd0dd"
             className="cursor-pointer"
           />
         </div>

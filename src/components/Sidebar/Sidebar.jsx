@@ -63,13 +63,13 @@ const Sidebar = ({ isMenuOpen }) => {
             to="/"
             className={`flex items-center gap-x-[6px] px-[15px] py-[10px] rounded-sm duration-300 ${
               pathname === "/"
-                ? "bg-[#f6f9ff] text-[#4154f1]"
-                : "hover:bg-[#f6f9ff] text-[#012970]"
+                ? "bg-[#dee8fc] text-[#252d78]"
+                : "hover:bg-[#dee8fc] text-[#bfd0dd]"
             }`}
           >
             <CgMenu
               size={18}
-              color={pathname === "/" ? "#4154f1" : " #899bbd"}
+              color={pathname === "/" ? "#252d78" : " #899bbd"}
             />
             <p className="text-[15px] font-semibold">Главная</p>
           </NavLink>
@@ -84,19 +84,19 @@ const Sidebar = ({ isMenuOpen }) => {
               <div
                 className={`flex items-center justify-between px-[15px] py-[10px] rounded-sm duration-300 ${
                   isActiveMenu(menu.links)
-                    ? "bg-[#f6f9ff] "
-                    : "hover:bg-[#f6f9ff] "
+                    ? "bg-[#dee8fc] "
+                    : "hover:bg-[#dee8fc] "
                 }`}
               >
                 <div className="flex items-center gap-x-[6px]">
                   {React.cloneElement(menu.icon, {
-                    color: isActiveMenu(menu.links) ? "#4154f1" : "#899bbd",
+                    color: isActiveMenu(menu.links) ? "#252d78" : "#899bbd",
                   })}
                   <p
                     className={`text-[15px] font-semibold ${
                       isActiveMenu(menu.links)
-                        ? "text-[#4154f1]"
-                        : "text-[#012970]"
+                        ? "text-[#252d78]"
+                        : "text-[#bfd0dd]"
                     }`}
                   >
                     {menu.title}
@@ -107,7 +107,7 @@ const Sidebar = ({ isMenuOpen }) => {
                   className={`${
                     selectedMenu[menu.title] ? "rotate-180" : ""
                   } duration-300`}
-                  color={isActiveMenu(menu.links) ? "#4154f1" : "#899bbd"}
+                  color={isActiveMenu(menu.links) ? "#252d78" : "#899bbd"}
                 />
               </div>
             </div>
@@ -125,8 +125,8 @@ const Sidebar = ({ isMenuOpen }) => {
                       to={link.link}
                       className={`flex items-center gap-x-2 text-[15px] font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
                         pathname === link.link
-                          ? "text-[#4154f1]"
-                          : "text-[#012970] hover:text-[#4154f1]"
+                          ? "text-[#252d78]"
+                          : "text-[#bfd0dd] hover:text-[#252d78]"
                       }`}
                     >
                       <HiMiniArrowSmallRight size={13} />
