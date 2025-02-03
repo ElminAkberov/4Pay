@@ -27,4 +27,3 @@ spec:
         imagePullPolicy: Always
       imagePullSecrets:
         - name: gitlab
-

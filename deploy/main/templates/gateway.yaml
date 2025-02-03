@@ -13,7 +13,7 @@ spec:
     hosts:
     - {{ .Values.base.host }}
     tls:
-      httpsRedirect: false
+      httpsRedirect: true
   - port:
       number: 443
       name: https
