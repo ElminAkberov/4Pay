@@ -26,7 +26,7 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
     <header className="px-4 bg-white py-3 sticky top-0 z-[600] w-full shadow-[0px_2px_20px_rgba(1,41,112,0.1)]">
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-x-[10px]">
-          <NavLink className="flex items-center gap-x-[6px] min-[1200px]:w-[280px]">
+          <NavLink className="flex items-center gap-x-[6px]">
             <span className="nunito font-bold text-[#19205c] text-[26px] max-[991px]:hidden">
               4Pay
             </span>
