@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.base.host }}
   namespace: istio-system
 spec:
-  secretName: {{ .Values.base.host }}-2-tls
+  secretName: {{ .Values.base.host }}-tls
   dnsNames:
     - {{ .Values.base.host }}
   issuerRef:
