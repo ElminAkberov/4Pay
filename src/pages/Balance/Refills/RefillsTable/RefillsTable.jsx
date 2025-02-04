@@ -1,7 +1,7 @@
 import Column from "antd/es/table/Column";
 import { DataTable } from "primereact/datatable";
 import React from "react";
-import "../../Refill.css";
+import "./refillsTable.css";
 
 const RefillsTable = () => {
   const data = [

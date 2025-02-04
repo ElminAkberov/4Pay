@@ -1,7 +1,7 @@
 import Column from "antd/es/table/Column";
 import { DataTable } from "primereact/datatable";
 import React from "react";
-import "../../payment.css";
+import "./paymentError.css";
 
 const PaymentErrorTable = () => {
   const data = [
