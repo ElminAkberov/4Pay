@@ -1,3 +1,19 @@
-.p-column-title{
-    padding: 20px 20px 20px 0;
-  }
+.refills_table .p-column-title {
+  padding: 20px 20px 0 10px;
+}
+
+.refills_table tr > td {
+  padding: 0px 20px 30px 10px;
+  border-bottom: 1px solid #bcd0c7;
+}
+
+.refills_table.p-datatable tbody tr:nth-child(even) {
+  background-color: #c7dbd2 !important;
+}
+
+.refills_table.p-datatable tbody tr:nth-child(odd) {
+  background-color: #d1e7dd !important;
+}
+.refills_table.p-datatable tbody tr:last-child {
+  border-bottom: 0px solid #000 !important;
+}

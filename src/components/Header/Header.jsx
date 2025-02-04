@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { FaCaretDown } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
 import React, { useEffect, useRef, useState } from "react";
+import { MdAccountCircle } from "react-icons/md";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 const Header = ({ setIsMenuOpen, isMenuOpen }) => {
   const [headerContent, setHeaderContent] = useState(false);
@@ -39,13 +41,19 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
           />
         </div>
         <div className="flex items-center relative ">
-          <p className="px-4 ">Курс: 98.85</p>
+          <div className="flex items-center gap-x-1">
+            <FaMoneyBillTransfer size={22} />
+            <p className="pr-4 ">Курс: 98.85</p>
+          </div>
           <div
             ref={menuRef}
             onClick={() => setHeaderContent(!headerContent)}
             className="flex items-center text-[#012970] cursor-pointer pl-2"
           >
-            <div>tech_mb</div>
+            <div className="flex items-center gap-x-1">
+              <MdAccountCircle size={25} />
+              <p>tech_mb</p>
+            </div>
             <FaCaretDown />
           </div>
           <div
