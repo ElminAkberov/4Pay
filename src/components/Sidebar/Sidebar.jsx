@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CgMenu } from "react-icons/cg";
 import { CiFileOn } from "react-icons/ci";
+import { FaWallet } from "react-icons/fa";
 import { FaUsers, FaMoneyBillTransfer } from "react-icons/fa6";
 import { GoChevronDown } from "react-icons/go";
 import { HiMiniArrowSmallRight } from "react-icons/hi2";
@@ -12,6 +13,16 @@ const Sidebar = ({ isMenuOpen }) => {
   const [selectedMenu, setSelectedMenu] = useState({});
 
   const menus = [
+    {
+      title: "Баланс",
+      icon: <FaWallet size={16} />,
+      links: [
+        { title: "Пополнения", link: "/refills" },
+        { title: "Пополнение в USDT", link: "/refills/create" },
+        { title: "Скачать отчет", link: "/refills/download/" },
+        { title: "Кошельки", link: "/refills/wallets/" },
+      ],
+    },
     {
       title: "Выводы",
       icon: <FaMoneyBillTransfer size={18} />,
@@ -37,6 +48,7 @@ const Sidebar = ({ isMenuOpen }) => {
         { title: "Отчет", link: "/payments/download/" },
         { title: "Обращения", link: "/appeals/" },
         { title: "Создать Заявку", link: "/payments/create/" },
+        { title: "Ошибки с платежами", link: "/payments/payment-errors" },
       ],
     },
   ];
@@ -114,7 +126,7 @@ const Sidebar = ({ isMenuOpen }) => {
             <div
               className={`overflow-hidden transition-all duration-300 ${
                 selectedMenu[menu.title]
-                  ? "max-h-40 opacity-100"
+                  ? "max-h-60 opacity-100"
                   : "max-h-0 opacity-0"
               }`}
             >

@@ -27,7 +27,7 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-x-[10px]">
           <NavLink className="flex items-center gap-x-[6px]">
-            <span className="nunito font-bold text-[#19205c] text-[26px] max-[991px]:hidden">
+            <span className="nunito font-bold text-[#19205c] text-[26px] ">
               4Pay
             </span>
           </NavLink>
