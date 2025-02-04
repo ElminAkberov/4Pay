@@ -3,7 +3,7 @@ image:
   tag: "v1.2.34"
 
 base:
-  host: "4pay.cash"
+  host: "dev.4pay.cash"
 
 pay_web:
   replicas: 1

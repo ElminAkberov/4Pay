@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.base.host }}
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.base.host }}
+      secretName: {{ .Values.base.host }}-tls
+  rules:
+    - host: {{ .Values.base.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pay-web
+                port:
+                  number: 80
