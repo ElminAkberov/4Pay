@@ -120,7 +120,7 @@ const Create = () => {
               </option>
             </select>
           </div>
-          <button className="hover:bg-[#0d6efd] hover:text-white px-[12px] py-[6px] border border-[#0d6efd] text-[#0d6efd] rounded-sm w-full my-4 duration-200 cursor-pointer">
+          <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
             Конвертировать
           </button>
         </fieldset>

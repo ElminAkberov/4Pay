@@ -156,7 +156,7 @@ const PaymentCreate = () => {
               <option value="Pay Me">Pay Me</option>
             </select>
           </div>
-          <button className="hover:bg-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#0d6efd] text-[#fff] bg-[#0d6efd] rounded-sm w-full my-4 duration-200 cursor-pointer">
+          <button className="hover:bg-[#0a58ca] hover:border-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#fff] bg-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
             Сохранить
           </button>
         </fieldset>
