@@ -18,6 +18,7 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Баланс",
+      title_link: "/refills",
       icon: <MdAccountBalance size={13} />,
       links: [
         { title: "Пополнения", link: "/refills" },
@@ -28,6 +29,7 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Выводы",
+      title_link: "/withdraws/create",
       icon: <HiOutlineBanknotes size={16} />,
       links: [
         { title: "Создать заявку", link: "/withdraws/create" },
@@ -37,6 +39,7 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Заявки",
+      title_link: "/payments/",
       icon: <FaInbox size={16} />,
       links: [
         { title: "Просмотр", link: "/payments/" },
@@ -65,19 +68,22 @@ const Sidebar = ({ isMenuOpen }) => {
         <ul className="py-5 pr-5 pl-2 ">
           {menus.map((menu, index) => (
             <li key={index} className="mb-1 border-b border-[#dee8fc]">
-              {console.log(menu.links)}
-              <div className="cursor-pointer">
-                <div
-                  className={`flex items-center justify-between px-[10px] py-[10px] rounded-sm duration-300 ${
-                    isActiveMenu(menu.links) ? "bg-[#dee8fc] " : " "
+              <div className="cursor-pointer group">
+                <NavLink
+                  to={menu.title_link}
+                  className={`flex items-center  justify-between  px-[10px] py-[10px] group-hover:bg-[#dee8fc] rounded-sm duration-300  ${
+                    isActiveMenu(menu.links) ? "bg-[#dee8fc] " : ""
                   }`}
                 >
-                  <div className="flex items-center gap-x-[6px]">
+                  <div className="flex items-center gap-x-[6px] ">
                     {React.cloneElement(menu.icon, {
-                      color: isActiveMenu(menu.links) ? "#252d78" : "#899bbd",
+                      className: `text-${
+                        isActiveMenu(menu.links) ? "[#252d78]" : "[#899bbd]"
+                      } group-hover:text-[#252d78] `,
                     })}
+
                     <p
-                      className={`text-[13px] font-semibold ${
+                      className={`text-[13px] group-hover:text-[#252d78]  duration-300 font-semibold ${
                         isActiveMenu(menu.links)
                           ? "text-[#252d78]"
                           : "text-[#bfd0dd]"
@@ -86,7 +92,7 @@ const Sidebar = ({ isMenuOpen }) => {
                       {menu.title}
                     </p>
                   </div>
-                </div>
+                </NavLink>
               </div>
               <div className={`overflow-hidden transition-all duration-300 `}>
                 <ul>
