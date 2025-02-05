@@ -1,7 +1,9 @@
 import React from "react";
 import { CgMenu } from "react-icons/cg";
-import { FaWallet } from "react-icons/fa";
+import { FaInbox, FaWallet } from "react-icons/fa";
 import { FaUsers, FaMoneyBillTransfer } from "react-icons/fa6";
+import { HiOutlineBanknotes } from "react-icons/hi2";
+import { MdAccountBalance, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 
 const Sidebar = ({ isMenuOpen }) => {
@@ -10,8 +12,13 @@ const Sidebar = ({ isMenuOpen }) => {
 
   const menus = [
     {
+      title: "Главная",
+      icon: <MdHome size={16} />,
+      links: [{ title: "Аналитика", link: "/" }],
+    },
+    {
       title: "Баланс",
-      icon: <FaWallet size={13} />,
+      icon: <MdAccountBalance size={13} />,
       links: [
         { title: "Пополнения", link: "/refills" },
         { title: "Пополнение в USDT", link: "/refills/create" },
@@ -21,7 +28,7 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Выводы",
-      icon: <FaMoneyBillTransfer size={16} />,
+      icon: <HiOutlineBanknotes size={16} />,
       links: [
         { title: "Создать заявку", link: "/withdraws/create" },
         { title: "Просмотр", link: "/withdraws/list" },
@@ -30,7 +37,7 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Заявки",
-      icon: <FaUsers size={16} />,
+      icon: <FaInbox size={16} />,
       links: [
         { title: "Просмотр", link: "/payments/" },
         // { title: "Отчет", link: "/payments/download/" },
@@ -42,80 +49,70 @@ const Sidebar = ({ isMenuOpen }) => {
   ];
 
   const isActiveMenu = (menuLinks) => {
-    return menuLinks.some((link) => pathname.startsWith(link.link));
+    return menuLinks.some((link) => pathname === link.link);
   };
   return (
-    <aside
-      className={`fixed h-full w-[300px] pb-16 max-h-[100vh] bg-white z-50 duration-300 ${
-        isMenuOpen ? "left-[-300px]" : "left-0"
-      } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
-    >
-      <ul className="py-5 pr-5 pl-2 ">
-        <li className="mb-1">
-          <NavLink
-            to="/"
-            className={`flex items-center gap-x-[6px] px-[8px] py-[10px] rounded-sm duration-300 ${
-              pathname === "/"
-                ? "bg-[#dee8fc] text-[#252d78]"
-                : " text-[#bfd0dd]"
-            }`}
-          >
-            <CgMenu
-              size={18}
-              color={pathname === "/" ? "#252d78" : " #899bbd"}
-            />
-            <p className="text-[14px] font-semibold">Главная</p>
-          </NavLink>
-        </li>
+    <>
+      <div
+        className={`${!isMenuOpen && "min-lg:min-w-[300px] duration-300"}`}
+      ></div>
 
-        {menus.map((menu, index) => (
-          <li key={index} className="mb-1 border-b border-[#dee8fc]">
-            <div className="cursor-pointer">
-              <div
-                className={`flex items-center justify-between px-[10px] py-[10px] rounded-sm duration-300 ${
-                  isActiveMenu(menu.links) ? "bg-[#dee8fc] " : " "
-                }`}
-              >
-                <div className="flex items-center gap-x-[6px]">
-                  {React.cloneElement(menu.icon, {
-                    color: isActiveMenu(menu.links) ? "#252d78" : "#899bbd",
-                  })}
-                  <p
-                    className={`text-[13px] font-semibold ${
-                      isActiveMenu(menu.links)
-                        ? "text-[#252d78]"
-                        : "text-[#bfd0dd]"
-                    }`}
-                  >
-                    {menu.title}
-                  </p>
+      <aside
+        className={`fixed h-full w-[300px] pb-16 max-h-[100vh] bg-white z-50 duration-300 ${
+          isMenuOpen ? "left-[-300px]" : "left-0"
+        } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
+      >
+        <ul className="py-5 pr-5 pl-2 ">
+          {menus.map((menu, index) => (
+            <li key={index} className="mb-1 border-b border-[#dee8fc]">
+              {console.log(menu.links)}
+              <div className="cursor-pointer">
+                <div
+                  className={`flex items-center justify-between px-[10px] py-[10px] rounded-sm duration-300 ${
+                    isActiveMenu(menu.links) ? "bg-[#dee8fc] " : " "
+                  }`}
+                >
+                  <div className="flex items-center gap-x-[6px]">
+                    {React.cloneElement(menu.icon, {
+                      color: isActiveMenu(menu.links) ? "#252d78" : "#899bbd",
+                    })}
+                    <p
+                      className={`text-[13px] font-semibold ${
+                        isActiveMenu(menu.links)
+                          ? "text-[#252d78]"
+                          : "text-[#bfd0dd]"
+                      }`}
+                    >
+                      {menu.title}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={`overflow-hidden transition-all duration-300 `}>
-              <ul>
-                {menu.links.map((link, idx) => (
-                  <>
-                    <li key={idx}>
-                      <NavLink
-                        to={link.link}
-                        className={`flex items-center gap-x-2 text-[13.2px] font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
-                          pathname === link.link
-                            ? "text-[#252d78]"
-                            : "text-[#bfd0dd] hover:text-[#252d78]"
-                        }`}
-                      >
-                        {link.title}
-                      </NavLink>
-                    </li>
-                  </>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </aside>
+              <div className={`overflow-hidden transition-all duration-300 `}>
+                <ul>
+                  {menu.links.map((link, idx) => (
+                    <>
+                      <li key={idx}>
+                        <NavLink
+                          to={link.link}
+                          className={`flex items-center gap-x-2 text-[13.2px] font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
+                            pathname === link.link
+                              ? "text-[#252d78]"
+                              : "text-[#bfd0dd] hover:text-[#252d78]"
+                          }`}
+                        >
+                          {link.title}
+                        </NavLink>
+                      </li>
+                    </>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </>
   );
 };
 

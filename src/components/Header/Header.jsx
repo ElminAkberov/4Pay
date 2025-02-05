@@ -40,10 +40,10 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
             className="cursor-pointer"
           />
         </div>
-        <div className="flex items-center relative ">
+        <div className="flex max-md:flex-col items-center relative ">
           <div className="flex items-center gap-x-1">
             <FaMoneyBillTransfer size={22} />
-            <p className="pr-4 ">Курс: 98.85</p>
+            <p className="md:pr-4 ">Курс: 98.85</p>
           </div>
           <div
             ref={menuRef}
@@ -59,7 +59,7 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
           <div
             className={`${
               !headerContent ? "opacity-0 invisible" : "opacity-100"
-            } absolute duration-300 bg-white shadow-[0_5px_30px_0_rgba(82,63,105,0.2)] w-[240px] p-5 right-0 top-8 rounded-md`}
+            } absolute duration-300 bg-white shadow-[0_5px_30px_0_rgba(82,63,105,0.2)] w-[240px] p-5 right-0 top-8 max-md:top-16 rounded-md`}
           >
             <h4 className="p-2 text-center font-medium text-[18px]">tech_mb</h4>
             <hr />
