@@ -1,0 +1,4 @@
+.custom-table tr.p-datatable-emptymessage {
+    display: none !important;
+  }
+  
