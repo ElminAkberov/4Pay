@@ -20,3 +20,10 @@ spec:
                 name: pay-web
                 port:
                   number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: pay-api
+                port:
+                  number: 8000
