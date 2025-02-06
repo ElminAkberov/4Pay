@@ -1,3 +1,5 @@
+import { Input, Select } from "antd";
+import { Option } from "antd/es/mentions";
 import React from "react";
 
 const RefillsCreate = () => {
@@ -11,27 +13,24 @@ const RefillsCreate = () => {
             <label htmlFor="" className="block">
               Хэш транзакции:
             </label>
-            <input
-              type="text"
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
-            />
+            <Input type="text" />
           </div>
-          <div className="">
+          <div>
             <label htmlFor="" className="block">
               Валюта:
             </label>
-            <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
-              name=""
-              id=""
+            <Select
+              style={{
+                borderColor: "#05256B",
+              }}
+              className="w-full px-[12px] py-[6px] duration-200"
             >
-              <option value="default">Рубль</option>
-            </select>
+              <Option>Рубль</Option>
+            </Select>
           </div>
 
-          
           <button className="hover:bg-[#0a58ca] hover:border-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#fff] bg-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
-          Сохранить
+            Сохранить
           </button>
         </fieldset>
       </form>

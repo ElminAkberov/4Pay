@@ -12,7 +12,6 @@ const Sidebar = ({ isMenuOpen }) => {
   const pathname = location.pathname;
 
   const menus = [
-   
     {
       title: "Пополнения",
       title_link: "/refills",
@@ -37,7 +36,6 @@ const Sidebar = ({ isMenuOpen }) => {
       title_link: "/payments/",
       icon: <FaInbox size={16} />,
       links: [
-        { title: "Просмотр", link: "/payments/" },
         // { title: "Отчет", link: "/payments/download/" },
         { title: "Обращения", link: "/appeals/" },
         { title: "Создать Заявку", link: "/payments/create/" },
@@ -92,22 +90,21 @@ const Sidebar = ({ isMenuOpen }) => {
               <div className="cursor-pointer group">
                 <NavLink
                   to={menu.title_link}
-                  className={`flex items-center  justify-between  px-[10px] py-[10px] group-hover:bg-[#dee8fc] rounded-sm duration-300  ${
-                    isActiveMenu(menu.links) ? "bg-[#dee8fc] " : ""
-                  }`}
+                  className={`flex items-center  justify-between  px-[12px] py-[10px] ${pathname === menu.title_link && "bg-[#dee8fc]"} group-hover:bg-[#dee8fc] rounded-sm duration-300`}
                 >
-                  <div className="flex items-center gap-x-[6px] ">
+                  <div className="flex items-center gap-x-[6px]">
                     {React.cloneElement(menu.icon, {
-                      className: `text-${
-                        isActiveMenu(menu.links) ? "[#252d78]" : "[#899bbd]"
-                      } group-hover:text-[#252d78] `,
+                      className: ` group-hover:text-[#252d78] ${
+                        pathname === menu.title_link
+                          ? "text-[#252d78]"
+                          : "text-[#bfd0dd] hover:text-[#252d78]"
+                      }`,
                     })}
-
                     <p
                       className={`text-[13px] group-hover:text-[#252d78]  duration-300 font-semibold ${
-                        isActiveMenu(menu.links)
-                          ? "text-[#252d78]"
-                          : "text-[#bfd0dd]"
+                        pathname === menu.title_link
+                          ? "text-[#252d78] "
+                          : "text-[#bfd0dd] hover:text-[#252d78]"
                       }`}
                     >
                       {menu.title}
@@ -115,16 +112,16 @@ const Sidebar = ({ isMenuOpen }) => {
                   </div>
                 </NavLink>
               </div>
-              <div className={`overflow-hidden transition-all duration-300 `}>
-                <ul>
+              <div className={`overflow-hidden transition-all duration-300`}>
+                <ul >
                   {menu.links.map((link, idx) => (
                     <>
-                      <li key={idx}>
+                      <li key={idx} className="group">
                         <NavLink
                           to={link.link}
-                          className={`flex items-center gap-x-2 text-[13.2px] font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
+                          className={`flex items-center gap-x-2 text-[13.2px] group-hover:bg-[#dee8fc] rounded-sm font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
                             pathname === link.link
-                              ? "text-[#252d78]"
+                              ? "text-[#252d78] "
                               : "text-[#bfd0dd] hover:text-[#252d78]"
                           }`}
                         >

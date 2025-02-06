@@ -1,3 +1,5 @@
+import { Input, Select } from "antd";
+import { Option } from "antd/es/mentions";
 import React from "react";
 
 const Create = () => {
@@ -10,7 +12,7 @@ const Create = () => {
             <label htmlFor="id_balance" className="block">
               Баланс:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               placeholder="0.0"
               disabled
@@ -21,7 +23,7 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Сумма вывода в USDT:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               type="number"
             />
@@ -30,7 +32,7 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Сумма вывода в USDT с учетом ставки:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               type="number"
             />
@@ -39,22 +41,19 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Направление вывода:
             </label>
-            <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
-              name=""
-              id=""
+            <Select
+              defaultValue="Вывод"
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
             >
-              <option value="">Вывод</option>
-              <option value="" selected>
-                Пополнить Выплатной кошелек
-              </option>
-            </select>
+              <Option value="Вывод">Вывод</Option>
+              <Option value="Пополнить">Пополнить Выплатной кошелек</Option>
+            </Select>
           </div>
           <div className="">
             <label htmlFor="id_amount_in_usdt" className="block">
               Ставка:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               type="number"
               placeholder="9.5"
@@ -65,7 +64,7 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               OTP код:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               type="number"
             />
@@ -74,7 +73,7 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Коммиссия на вывод:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               placeholder="0.0"
               disabled
@@ -85,7 +84,7 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Минимальный баланс:
             </label>
-            <input
+            <Input
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               placeholder="0.0"
               disabled
@@ -96,29 +95,31 @@ const Create = () => {
             <label htmlFor="id_amount_in_usdt" className="block">
               Пользователь:
             </label>
-            <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <Select
+              defaultValue={"tech_mb"}
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
               name=""
               id=""
             >
-              <option value="" selected>
+              <Option value="" >
                 tech_mb
-              </option>
-            </select>
+              </Option>
+            </Select>
           </div>
           <div className="">
             <label htmlFor="id_amount_in_usdt" className="block">
               Гео:
             </label>
-            <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <Select
+            defaultValue={"Россия"}
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
               name=""
               id=""
             >
-              <option value="" selected>
+              <Option value="" >
                 Россия
-              </option>
-            </select>
+              </Option>
+            </Select>
           </div>
           <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
             Конвертировать
