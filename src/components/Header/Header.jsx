@@ -25,52 +25,16 @@ const Header = ({ setIsMenuOpen, isMenuOpen }) => {
   }, []);
 
   return (
-    <header className="px-4 bg-white py-3 sticky top-0 z-[600] w-full shadow-[0px_2px_20px_rgba(1,41,112,0.1)]">
+    <header className="px-4 bg-white py-2 sticky top-0 z-[600] w-full shadow-[0px_2px_20px_rgba(1,41,112,0.1)]">
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-x-[10px]">
-          <NavLink className="flex items-center gap-x-[6px]">
+          <div onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex items-center gap-x-[6px] cursor-pointer">
             <span className="nunito font-bold text-[#19205c] text-[26px] ">
               4Pay
             </span>
-          </NavLink>
-          <CgMenu
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            size={38}
-            color="#bfd0dd"
-            className="cursor-pointer"
-          />
-        </div>
-        <div className="flex max-md:flex-col items-center relative ">
-          <div className="flex items-center gap-x-1">
-            <FaMoneyBillTransfer size={22} />
-            <p className="md:pr-4 ">Курс: 98.85</p>
-          </div>
-          <div
-            ref={menuRef}
-            onClick={() => setHeaderContent(!headerContent)}
-            className="flex items-center text-[#012970] cursor-pointer pl-2"
-          >
-            <div className="flex items-center gap-x-1">
-              <MdAccountCircle size={25} />
-              <p>tech_mb</p>
-            </div>
-            <FaCaretDown />
-          </div>
-          <div
-            className={`${
-              !headerContent ? "opacity-0 invisible" : "opacity-100"
-            } absolute duration-300 bg-white shadow-[0_5px_30px_0_rgba(82,63,105,0.2)] w-[240px] p-5 right-0 top-8 max-md:top-16 rounded-md`}
-          >
-            <h4 className="p-2 text-center font-medium text-[18px]">tech_mb</h4>
-            <hr />
-            <NavLink
-              className={` flex cursor-pointer items-center gap-x-1 mt-1 `}
-            >
-              <IoExitOutline size={20} />
-              <p>Выйти</p>
-            </NavLink>
           </div>
         </div>
+       
       </nav>
     </header>
   );

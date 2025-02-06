@@ -3,8 +3,10 @@ import { CgMenu } from "react-icons/cg";
 import { FaInbox, FaWallet } from "react-icons/fa";
 import { FaUsers, FaMoneyBillTransfer } from "react-icons/fa6";
 import { HiOutlineBanknotes } from "react-icons/hi2";
+import { IoExitOutline } from "react-icons/io5";
 import { MdAccountBalance, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
+import "./sidebar.css"
 
 const Sidebar = ({ isMenuOpen }) => {
   const location = useLocation();
@@ -61,11 +63,11 @@ const Sidebar = ({ isMenuOpen }) => {
       ></div>
 
       <aside
-        className={`fixed h-full w-[300px] pb-16 max-h-[100vh] bg-white z-50 duration-300 ${
+        className={`fixed h-full w-[300px] pb-16 max-h-[100vh] overflow-y-scroll scroller bg-white z-50 duration-300 ${
           isMenuOpen ? "left-[-300px]" : "left-0"
         } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
       >
-        <ul className="py-5 pr-5 pl-2 ">
+        <ul className="py-6 pt-2 pr-5 pl-2 ">
           {menus.map((menu, index) => (
             <li key={index} className="mb-1 border-b border-[#dee8fc]">
               <div className="cursor-pointer group">
@@ -117,6 +119,18 @@ const Sidebar = ({ isMenuOpen }) => {
             </li>
           ))}
         </ul>
+        <div className="flex max-md:flex-col md:items-center justify-between max-md:justify-start ml-2 mr-5 mt-7">
+          <div className="flex text-[#252d78]  text-sm items-center gap-x-1">
+            <FaMoneyBillTransfer size={18} />
+            <p className="md:pr-4 ">Курс: 98.85</p>
+          </div>
+          <NavLink
+            className={` flex cursor-pointer text-[#252d78] text-sm  items-center gap-x-1  `}
+          >
+            <IoExitOutline size={20} />
+            <p>Выйти</p>
+          </NavLink>
+        </div>
       </aside>
     </>
   );
