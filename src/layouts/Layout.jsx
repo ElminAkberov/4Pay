@@ -8,13 +8,13 @@ const Layout = () => {
   const { isMenuOpen, setIsMenuOpen } = useContext(MenuContext);
 
   return (
-    <>
+    <div className="montserrat">
       <Header setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
       <section className="flex">
         <Sidebar isMenuOpen={isMenuOpen} />
         <Outlet />
       </section>
-    </>
+    </div>
   );
 };
 

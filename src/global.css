@@ -4,6 +4,9 @@
   font-weight: 500;
   src: url("/font/Nunito/Nunito-Medium.ttf");
 }
+.montserrat {
+  font-family: "Montserrat", serif;
+}
 @font-face {
   font-family: "Open Sans";
   font-weight: 500;
@@ -25,12 +28,12 @@ body {
 .open-sans {
   font-family: "Open Sans";
 }
-.form-input:focus {
+/* .form-input:focus {
   border-color: #86b7fe;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
   transition: 200;
-}
+} */
 input:disabled {
   background-color: #e9ecef;
 }
@@ -45,4 +48,28 @@ input:disabled {
 }
 .scroll-white::-webkit-scrollbar-thumb {
   background: #19205c;
+}
+.ant-select-selector:hover {
+  border-color: #05256b !important;
+}
+.ant-select-selector:focus {
+  border-color: #05256b !important;
+}
+input {
+  border: 1px solid #d1d5db;
+  transition: border-color 0.2s ease-in-out;
+}
+input:focus {
+  border-color: #05256b !important;
+}
+input:hover {
+  border-color: #05256b !important;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
