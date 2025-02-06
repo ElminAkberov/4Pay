@@ -2,7 +2,7 @@ import React from "react";
 import ApexChart from "./ApexChart/ApexChart";
 const HomePage = () => {
   return (
-    <menu className="p-[20px] w-full">
+    <menu className="p-[20px] w-full overflow-hidden">
       <div className="card md:grid grid-cols-3 max-[1400px]:grid-cols-2  gap-[20px] ">
         <div className="bg-white p-5 h-fit max-md:mb-5 shadow-[0px_0_30px_rgba(1,41,112,0.1)] rounded-md">
           <h5

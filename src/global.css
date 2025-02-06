@@ -37,3 +37,12 @@ input:disabled {
 .custom-table tr.p-datatable-emptymessage {
   display: none !important;
 }
+.scroll-white::-webkit-scrollbar {
+  width: 5px;
+}
+.scroll-white::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.scroll-white::-webkit-scrollbar-thumb {
+  background: #19205c;
+}

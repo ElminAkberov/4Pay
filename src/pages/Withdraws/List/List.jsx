@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 
 const List = () => {
   return (
-    <menu className="flex custom-table justify-center w-full p-5 max-[1200px]:px-10">
+    <menu className="flex overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10">
       <DataTable
        rows={10}
        tableStyle={{ minWidth: "80rem" }}

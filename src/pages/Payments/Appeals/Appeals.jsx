@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import React from "react";
 const Appeals = () => {
   return (
-    <menu className=" custom-table w-full p-[20px]">
+    <menu className="overflow-hidden custom-table w-full p-[20px]">
       <h1 className="nunito text-[40px] text-center text-[#444] mb-2">
         Обращения
       </h1>
@@ -11,7 +11,7 @@ const Appeals = () => {
         rows={10}
         tableStyle={{ minWidth: "75rem" }}
         scrollable
-        className="px-32 max-lg:px-16 max-md:px-4 duration-200"
+        className="px-12 max-lg:px-16 max-md:px-4 duration-200"
         rowClassName={() => "dataTableRow"}
         style={{ userSelect: "text", overflowX: "auto" }}
       >

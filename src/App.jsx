@@ -1,12 +1,15 @@
-import React from 'react'
-import Layout from './layouts/Layout'
+import React from "react";
+import Layout from "./layouts/Layout";
+import { MenuProvider } from "./Context/MenuContext";
 
 const App = () => {
   return (
     <>
-      <Layout />
+      <MenuProvider>
+        <Layout />
+      </MenuProvider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
