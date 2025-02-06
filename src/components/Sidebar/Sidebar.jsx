@@ -1,29 +1,23 @@
 import React from "react";
-import { CgMenu } from "react-icons/cg";
-import { FaInbox, FaWallet } from "react-icons/fa";
-import { FaUsers, FaMoneyBillTransfer } from "react-icons/fa6";
+import { FaInbox } from "react-icons/fa";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { HiOutlineBanknotes } from "react-icons/hi2";
 import { IoExitOutline } from "react-icons/io5";
 import { MdAccountBalance, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
-import "./sidebar.css"
+import "./sidebar.css";
 
 const Sidebar = ({ isMenuOpen }) => {
   const location = useLocation();
   const pathname = location.pathname;
 
   const menus = [
+   
     {
-      title: "Главная",
-      icon: <MdHome size={16} />,
-      links: [{ title: "Аналитика", link: "/" }],
-    },
-    {
-      title: "Баланс",
+      title: "Пополнения",
       title_link: "/refills",
       icon: <MdAccountBalance size={13} />,
       links: [
-        { title: "Пополнения", link: "/refills" },
         { title: "Пополнение в USDT", link: "/refills/create" },
         // { title: "Скачать отчет", link: "/refills/download/" },
         { title: "Кошельки", link: "/refills/wallets/" },
@@ -31,11 +25,10 @@ const Sidebar = ({ isMenuOpen }) => {
     },
     {
       title: "Выводы",
-      title_link: "/withdraws/create",
+      title_link: "/withdraws/list",
       icon: <HiOutlineBanknotes size={16} />,
       links: [
         { title: "Создать заявку", link: "/withdraws/create" },
-        { title: "Просмотр", link: "/withdraws/list" },
         // { title: "Отчёт", link: "/withdraws/download" },
       ],
     },
@@ -67,7 +60,33 @@ const Sidebar = ({ isMenuOpen }) => {
           isMenuOpen ? "left-[-300px]" : "left-0"
         } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
       >
-        <ul className="py-6 pt-2 pr-5 pl-2 ">
+        <ul className="pb-2 pt-2 pr-5 pl-2 ">
+          <li>
+            <div className="cursor-pointer group">
+              <NavLink
+                to={"/"}
+                className={`flex items-center  justify-between  px-[10px] py-[10px] group-hover:bg-[#dee8fc] rounded-sm duration-300  ${
+                  pathname == "/" ? "bg-[#dee8fc] " : ""
+                }`}
+              >
+                <div className="flex items-center gap-x-[6px] ">
+                  {React.cloneElement(<MdHome size={16} />, {
+                    className: `text-${
+                      pathname == "/" ? "[#252d78]" : "[#899bbd]"
+                    } group-hover:text-[#252d78] `,
+                  })}
+
+                  <p
+                    className={`text-[13px] group-hover:text-[#252d78]  duration-300 font-semibold ${
+                      pathname == "/" ? "text-[#252d78]" : "text-[#bfd0dd]"
+                    }`}
+                  >
+                    Главная
+                  </p>
+                </div>
+              </NavLink>
+            </div>
+          </li>
           {menus.map((menu, index) => (
             <li key={index} className="mb-1 border-b border-[#dee8fc]">
               <div className="cursor-pointer group">
@@ -119,7 +138,7 @@ const Sidebar = ({ isMenuOpen }) => {
             </li>
           ))}
         </ul>
-        <div className="flex max-md:flex-col md:items-center justify-between max-md:justify-start ml-2 mr-5 mt-7">
+        <div className="flex max-md:flex-col md:items-center justify-between max-md:justify-start ml-2 mr-5 ">
           <div className="flex text-[#252d78]  text-sm items-center gap-x-1">
             <FaMoneyBillTransfer size={18} />
             <p className="md:pr-4 ">Курс: 98.85</p>
