@@ -1,0 +1,25 @@
+.custom-table tr.p-datatable-emptymessage {
+  display: none !important;
+}
+
+.payment_error .p-column-title {
+  padding: 20px 20px 0 10px;
+  color: #fff;
+}
+
+.payment_error tr > td {
+  padding: 10px 20px 10px 10px;
+  border-bottom: 1px solid #bcd0c7;
+  color: #fff;
+}
+
+.payment_error.p-datatable tbody tr:nth-child(even) {
+  background-color: #24303F !important;
+}
+
+.payment_error.p-datatable tbody tr:nth-child(odd) {
+  background-color: #1D2A39 !important;
+}
+.payment_error.p-datatable tbody tr:last-child {
+  border-bottom: 0px solid #000 !important;
+}
