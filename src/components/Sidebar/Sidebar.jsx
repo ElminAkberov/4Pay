@@ -19,10 +19,10 @@ const Sidebar = () => {
 
   const menus = [
     {
-      title: "Апелляцию",
+      title: "Апеляции",
       title_link: "/refills",
       icon: <MdAccountBalance size={16} />,
-      links: [{ title: "Аодать апелляцию", link: "/refills/create" }],
+      links: [{ title: "Подать апелляцию", link: "/refills/create" }],
     },
     {
       title: "Выводы",
