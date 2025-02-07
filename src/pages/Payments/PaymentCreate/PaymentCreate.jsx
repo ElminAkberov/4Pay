@@ -1,5 +1,3 @@
-import { Input, Select } from "antd";
-import { Option } from "antd/es/mentions";
 import React from "react";
 
 const PaymentCreate = () => {
@@ -63,55 +61,57 @@ const PaymentCreate = () => {
     "Pay Me",
   ];
   return (
-    <menu className="flex items-center justify-center w-full p-[20px]">
-      <div className="min-md:w-1/4"></div>
-      <form className="min-md:w-1/2">
-        <h2 className="nunito text-[31px] text-[#444]">Создать Заявку</h2>
+    <menu className="flex items-center justify-center w-full p-[20px] max-w-[640px] mx-auto">
+      <form className="w-full">
+        <h2 className="nunito text-[31px] text-[#fff]">Создать Заявку</h2>
         <fieldset>
-          <div className="w-full">
-            <label htmlFor="" className="block">
+          <div className="w-full mb-4">
+            <label htmlFor="" className="block mb-2">
               Сумма:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-[#1D2A39] text-white py-3 px-5  outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-4">
             <label htmlFor="id_amount_in_usdt" className="block">
               Метод перевода:
             </label>
-            <Select
+
+            <select
               defaultValue={"******"}
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px]  form-input duration-200"
+              className="w-full rounded-lg border-[#3d4d60] border bg-[#1D2A39] text-white py-3 px-5  outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               name=""
               id=""
             >
-              <Option value="Any">******</Option>
+              <option value="Any">******</option>
 
-              <Option value="to_card_number">Карта</Option>
-              <Option value="to_sbp_number">СБП</Option>
-            </Select>
+              <option value="to_card_number">Карта</option>
+              <option value="to_sbp_number">СБП</option>
+            </select>
           </div>
           <div className="">
             <label htmlFor="id_amount_in_usdt" className="block">
               Банк:
             </label>
-            <Select defaultValue={banks[1]} className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200">
+
+            <select
+              defaultValue={banks[1]}
+              className="w-full rounded-lg border-[#3d4d60] border bg-[#1D2A39] text-white py-3 px-5  outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
+            >
               {banks.map((bank) => (
-                <Option key={bank} value={bank}>
+                <option key={bank} value={bank}>
                   {bank}
-                </Option>
+                </option>
               ))}
-            </Select>
-            
+            </select>
           </div>
-          <button className="hover:bg-[#0a58ca] hover:border-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#fff] bg-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
+          <button className="hover:bg-[#05256B] hover:border-[#05256B] hover:text-white px-[12px] py-[6px] border border-[#fff] text-[#fff] bg-[] rounded-sm w-full my-4 duration-200 cursor-pointer">
             Сохранить
           </button>
         </fieldset>
       </form>
-      <div className="min-md:w-1/3"></div>
     </menu>
   );
 };

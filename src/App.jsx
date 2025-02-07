@@ -1,13 +1,13 @@
 import React from "react";
 import Layout from "./layouts/Layout";
-import { MenuProvider } from "./Context/MenuContext";
-
+import "./global.css";
+import { ContextProvider } from "./Context/ContextProvider";
 const App = () => {
   return (
     <>
-      <MenuProvider>
+      <ContextProvider>
         <Layout />
-      </MenuProvider>
+      </ContextProvider>
     </>
   );
 };

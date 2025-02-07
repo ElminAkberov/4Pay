@@ -1,26 +1,28 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FaInbox } from "react-icons/fa";
-import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { GoArrowLeft } from "react-icons/go";
 import { HiOutlineBanknotes } from "react-icons/hi2";
-import { IoExitOutline } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 import { MdAccountBalance, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
-import "./sidebar.css";
+import { Context } from "../../Context/ContextProvider";
 
-const Sidebar = ({ isMenuOpen }) => {
+const Sidebar = () => {
+  const { isMenuOpen, setIsMenuOpen } = useContext(Context);
   const location = useLocation();
   const pathname = location.pathname;
+  const [selectedMenu, setSelectedMenu] = useState(null);
+
+  const handleClick = (menuTitle) => {
+    setSelectedMenu(selectedMenu === menuTitle ? null : menuTitle);
+  };
 
   const menus = [
     {
-      title: "Пополнения",
+      title: "Апеляции",
       title_link: "/refills",
-      icon: <MdAccountBalance size={13} />,
-      links: [
-        { title: "Пополнение в USDT", link: "/refills/create" },
-        // { title: "Скачать отчет", link: "/refills/download/" },
-        { title: "Кошельки", link: "/refills/wallets/" },
-      ],
+      icon: <MdAccountBalance size={16} />,
+      links: [{ title: "Подать апелляцию", link: "/refills/create" }],
     },
     {
       title: "Выводы",
@@ -28,7 +30,7 @@ const Sidebar = ({ isMenuOpen }) => {
       icon: <HiOutlineBanknotes size={16} />,
       links: [
         { title: "Создать заявку", link: "/withdraws/create" },
-        // { title: "Отчёт", link: "/withdraws/download" },
+        { title: "Просмотр", link: "/withdraws/list" },
       ],
     },
     {
@@ -36,7 +38,7 @@ const Sidebar = ({ isMenuOpen }) => {
       title_link: "/payments/",
       icon: <FaInbox size={16} />,
       links: [
-        // { title: "Отчет", link: "/payments/download/" },
+        { title: "Просмотр", link: "/payments/" },
         { title: "Обращения", link: "/appeals/" },
         { title: "Создать Заявку", link: "/payments/create/" },
         { title: "Ошибки с платежами", link: "/payments/payment-errors" },
@@ -44,111 +46,89 @@ const Sidebar = ({ isMenuOpen }) => {
     },
   ];
 
-  const isActiveMenu = (menuLinks) => {
-    return menuLinks.some((link) => pathname === link.link);
-  };
   return (
-    <>
+    <aside>
+      <div className="lg:w-[290px]"></div>
       <div
-        className={`${!isMenuOpen && "min-lg:min-w-[300px] duration-300"}`}
-      ></div>
-
-      <aside
-        className={`fixed h-full w-[300px] pb-16 max-h-[100vh] overflow-y-scroll scroller bg-white z-50 duration-300 ${
-          isMenuOpen ? "left-[-300px]" : "left-0"
-        } z-50 shadow-[0px_0px_20px_rgba(1,41,112,0.1)]`}
+        className={`py-[26px] fixed top-0 left-0 z-[90] px-[24px] scroller overflow-y-scroll h-[100vh] bg-[#1C2434] shadow-2xs transition-all duration-300 ${
+          isMenuOpen ? "left-0" : "max-lg:-left-[290px]"
+        } w-[290px]`}
       >
-        <ul className="pb-2 pt-2 pr-5 pl-2 ">
-          <li>
-            <div className="cursor-pointer group">
-              <NavLink
-                to={"/"}
-                className={`flex items-center  justify-between  px-[10px] py-[10px] group-hover:bg-[#dee8fc] rounded-sm duration-300  ${
-                  pathname == "/" ? "bg-[#dee8fc] " : ""
-                }`}
-              >
-                <div className="flex items-center gap-x-[6px] ">
-                  {React.cloneElement(<MdHome size={16} />, {
-                    className: `text-${
-                      pathname == "/" ? "[#252d78]" : "[#899bbd]"
-                    } group-hover:text-[#252d78] `,
-                  })}
+        <div className="flex items-center justify-between">
+          <h2 className="text-white text-2xl comfortaa"><span className="text-4xl ">4</span>Pay <sup className="text-[14px]">&copy;</sup></h2>
+          <GoArrowLeft
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            size={25}
+            color="#fff"
+            className="lg:hidden cursor-pointer"
+          />
+        </div>
 
-                  <p
-                    className={`text-[13px] group-hover:text-[#252d78]  duration-300 font-semibold ${
-                      pathname == "/" ? "text-[#252d78]" : "text-[#bfd0dd]"
-                    }`}
-                  >
-                    Главная
-                  </p>
+        <div className="mt-10">
+          <h4 className="text-[#8A99AF] font-semibold mb-4">MENU</h4>
+          <ul>
+            <li className="mb-2">
+              <NavLink
+                to="/"
+                onClick={() => handleClick('Главная')}
+                className={`${
+                  pathname === "/" ? "bg-[#333A48]" : ""
+                } flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300`}
+              >
+                <div className="flex items-center gap-x-1">
+                  <MdHome size={16} />
+                  <p className="font-medium">Главная</p>
                 </div>
               </NavLink>
-            </div>
-          </li>
-          {menus.map((menu, index) => (
-            <li key={index} className="mb-1 border-b border-[#dee8fc]">
-              <div className="cursor-pointer group">
-                <NavLink
-                  to={menu.title_link}
-                  className={`flex items-center  justify-between  px-[12px] py-[10px] ${pathname === menu.title_link && "bg-[#dee8fc]"} group-hover:bg-[#dee8fc] rounded-sm duration-300`}
-                >
-                  <div className="flex items-center gap-x-[6px]">
-                    {React.cloneElement(menu.icon, {
-                      className: ` group-hover:text-[#252d78] ${
-                        pathname === menu.title_link
-                          ? "text-[#252d78]"
-                          : "text-[#bfd0dd] hover:text-[#252d78]"
-                      }`,
-                    })}
-                    <p
-                      className={`text-[13px] group-hover:text-[#252d78]  duration-300 font-semibold ${
-                        pathname === menu.title_link
-                          ? "text-[#252d78] "
-                          : "text-[#bfd0dd] hover:text-[#252d78]"
-                      }`}
-                    >
-                      {menu.title}
-                    </p>
-                  </div>
-                </NavLink>
-              </div>
-              <div className={`overflow-hidden transition-all duration-300`}>
-                <ul >
-                  {menu.links.map((link, idx) => (
-                    <>
-                      <li key={idx} className="group">
-                        <NavLink
-                          to={link.link}
-                          className={`flex items-center gap-x-2 text-[13.2px] group-hover:bg-[#dee8fc] rounded-sm font-semibold pl-[30px] py-[10px] leading-5 duration-300 ${
-                            pathname === link.link
-                              ? "text-[#252d78] "
-                              : "text-[#bfd0dd] hover:text-[#252d78]"
-                          }`}
-                        >
-                          {link.title}
-                        </NavLink>
-                      </li>
-                    </>
-                  ))}
-                </ul>
-              </div>
             </li>
-          ))}
-        </ul>
-        <div className="flex max-md:flex-col md:items-center justify-between max-md:justify-start ml-2 mr-5 ">
-          <div className="flex text-[#252d78]  text-sm items-center gap-x-1">
-            <FaMoneyBillTransfer size={18} />
-            <p className="md:pr-4 ">Курс: 98.85</p>
-          </div>
-          <NavLink
-            className={` flex cursor-pointer text-[#252d78] text-sm  items-center gap-x-1  `}
-          >
-            <IoExitOutline size={20} />
-            <p>Выйти</p>
-          </NavLink>
+            {menus.map((menu, index) => {
+              const isActive = menu.links.some(link => pathname === link.link);
+              return (
+                <li key={index} className="mb-2">
+                  <div
+                    onClick={() => handleClick(menu.title)}
+                    className={`flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300 ${
+                      selectedMenu === menu.title || isActive ? "bg-[#333A48]" : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-x-1">
+                      {menu.icon}
+                      <p className="font-medium">{menu.title}</p>
+                    </div>
+                    <IoChevronDown
+                      size={20}
+                      className={`transition-transform duration-300 ${
+                        selectedMenu === menu.title || isActive ? "rotate-180" : ""
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`ml-10 transition-all duration-300 overflow-hidden ${
+                      selectedMenu === menu.title || isActive ? "max-h-[200px]" : "max-h-0"
+                    }`}
+                  >
+                    <ul>
+                      {menu.links.map((link, idx) => (
+                        <li key={idx} className="my-3">
+                          <NavLink
+                            to={link.link}
+                            className={`font-normal hover:text-[#fff] duration-300 ${
+                              pathname === link.link ? "text-[#fff]" : "text-[#8A99AF]"
+                            }`}
+                          >
+                            {link.title}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </aside>
-    </>
+      </div>
+    </aside>
   );
 };
 

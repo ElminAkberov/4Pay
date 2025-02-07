@@ -3,7 +3,7 @@ import RefillsTable from "./RefillsTable/RefillsTable";
 
 const Refills = () => {
   return (
-    <menu className="custom-table overflow-hidden flex items-center justify-center w-full pl-[20px]">
+    <menu className="custom-table satoshi overflow-hidden flex items-center justify-center w-full pl-[20px]">
       <RefillsTable />
     </menu>
   );

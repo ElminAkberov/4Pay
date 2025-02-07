@@ -128,7 +128,7 @@ const PaymentErrorTable = () => {
     },
   ];
   return (
-    <div className="">
+    <div className="satoshi">
       <DataTable
         rows={10}
         tableStyle={{ minWidth: "83rem" }}

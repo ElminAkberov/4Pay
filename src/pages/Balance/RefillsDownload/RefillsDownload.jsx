@@ -13,7 +13,7 @@ const RefillsDownload = () => {
                 С даты:
               </label>
               <input
-                className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+                className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#3d4d60] form-input duration-200"
                 placeholder="0.0"
                 type="date"
               />
@@ -23,7 +23,7 @@ const RefillsDownload = () => {
                 По дату:
               </label>
               <input
-                className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+                className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#3d4d60] form-input duration-200"
                 placeholder="0.0"
                 type="date"
               />
@@ -34,7 +34,7 @@ const RefillsDownload = () => {
               Выберите статус:
             </label>
             <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#3d4d60] form-input duration-200"
               name=""
               id=""
             >
@@ -56,7 +56,7 @@ const RefillsDownload = () => {
               Пользователь:
             </label>
             <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#3d4d60] form-input duration-200"
               name=""
               id=""
             >
@@ -69,7 +69,7 @@ const RefillsDownload = () => {
               Гео:
             </label>
             <select
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#3d4d60] form-input duration-200"
               name=""
               id=""
             >

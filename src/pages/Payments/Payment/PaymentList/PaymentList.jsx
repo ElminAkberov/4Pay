@@ -4,7 +4,7 @@ import React from "react";
 
 const PaymentList = () => {
   return (
-    <menu className="custom-table flex items-center justify-center w-full">
+    <menu className="custom-table text-white satoshi flex items-center justify-center w-full">
       <DataTable
         rows={10}
         tableStyle={{ minWidth: "83rem" }}

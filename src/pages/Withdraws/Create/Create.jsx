@@ -1,132 +1,126 @@
-import { Input, Select } from "antd";
-import { Option } from "antd/es/mentions";
 import React from "react";
 
 const Create = () => {
   return (
-    <menu className="flex items-center justify-center w-full p-[20px]">
-      <div className="min-md:w-1/3"></div>
-      <form className="min-md:w-1/3 ">
+    <menu className="flex items-center justify-center  p-[20px] w-full max-w-[640px] mx-auto">
+      <form className=" w-full">
         <fieldset>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_balance" className="block">
               Баланс:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60]  bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] disabled:bg-[#ccc] "
               placeholder="0.0"
               disabled
               type="text"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Сумма вывода в USDT:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Сумма вывода в USDT с учетом ставки:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Направление вывода:
             </label>
-            <Select
+
+            <select
               defaultValue="Вывод"
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
+              className="w-full rounded-lg border-[#3d4d60] border text-white bg-[#1D2A39] py-3 px-5 outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
             >
-              <Option value="Вывод">Вывод</Option>
-              <Option value="Пополнить">Пополнить Выплатной кошелек</Option>
-            </Select>
+              <option value="Вывод">Вывод</option>
+              <option value="Пополнить">Пополнить Выплатной кошелек</option>
+            </select>
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Ставка:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0] disabled:bg-[#ccc] "
               type="number"
               placeholder="9.5"
-              disabled
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               OTP код:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Коммиссия на вывод:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               placeholder="0.0"
               disabled
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Минимальный баланс:
             </label>
-            <Input
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
+            <input
+              className="w-full rounded-lg border-[#3d4d60] border bg-white py-3 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               placeholder="0.0"
               disabled
               type="number"
             />
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Пользователь:
             </label>
-            <Select
+
+            <select
+              className="w-full rounded-lg border-[#3d4d60] text-white border bg-[#1D2A39] py-3 px-5 outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               defaultValue={"tech_mb"}
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
               name=""
               id=""
             >
-              <Option value="" >
-                tech_mb
-              </Option>
-            </Select>
+              <option value="">tech_mb</option>
+            </select>
           </div>
-          <div className="">
+          <div className="mb-2">
             <label htmlFor="id_amount_in_usdt" className="block">
               Гео:
             </label>
-            <Select
-            defaultValue={"Россия"}
-              className="bg-white w-full placeholder:text-black px-[12px] py-[6px] form-input duration-200"
+
+            <select
+              defaultValue={"Россия"}
+              className="w-full rounded-lg border-[#3d4d60] text-white border bg-[#1D2A39] py-3 px-5 outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
               name=""
               id=""
             >
-              <Option value="" >
-                Россия
-              </Option>
-            </Select>
+              <option value="">Россия</option>
+            </select>
           </div>
-          <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer">
+          <button className="hover:bg-[#1C2434] hover:text-white px-[12px] py-[6px] border border-[#fff] text-[#fff] rounded-sm w-full my-4 duration-200 cursor-pointer">
             Конвертировать
           </button>
         </fieldset>
       </form>
-      <div className="min-md:w-1/3"></div>
     </menu>
   );
 };
