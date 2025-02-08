@@ -4,11 +4,16 @@ import { GrMenu } from "react-icons/gr";
 import { IoChevronDown } from "react-icons/io5";
 import { Context } from "../../Context/ContextProvider";
 import { CiLogout } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../features/login/loginSlice";
 const Header = () => {
   const { isMenuOpen, setIsMenuOpen } = useContext(Context);
   const [headerContent, setHeaderContent] = useState(false);
   const menuRef = useRef(null);
-
+  // const { success, accessToken } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -21,6 +26,12 @@ const Header = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+
+    const handleLogout = () => {
+      dispatch(logoutUser());
+      navigate("/");
+    };
   return (
     <header className=" sticky top-0 right-0 w-full bg-[#1C2434] text-white py-3 px-3 shadow-xl">
       <div className="flex justify-between items-center ">
@@ -67,12 +78,12 @@ const Header = () => {
               </div>
 
               <hr />
-              <div className=" py-1 flex flex-col items-center justify-center">
-                <div className="flex items-center gap-x-1">
+              <div className=" py-1 flex flex-col items-center justify-center z-1000">
+                <div className="flex items-center gap-x-1 cursor-pointer" onClick={handleLogout} >
                   <CiLogout />
                   Выйти
                 </div>
-                <div className="flex md:hidden satoshi text-sm items-center gap-x-1">
+                <div className="flex md:hidden satoshi text-sm items-center gap-x-1 ">
                   <FaMoneyBillTransfer size={20} />
                   <p className="pr-4">Курс: 98.85</p>
                 </div>

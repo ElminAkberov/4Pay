@@ -39,7 +39,7 @@ const Sidebar = () => {
       icon: <FaInbox size={16} />,
       links: [
         { title: "Просмотр", link: "/payments/" },
-        { title: "Обращения", link: "/appeals/" },
+        // { title: "Обращения", link: "/appeals/" },
         { title: "Создать Заявку", link: "/payments/create/" },
         { title: "Ошибки с платежами", link: "/payments/payment-errors" },
       ],
@@ -72,7 +72,7 @@ const Sidebar = () => {
                 to="/"
                 onClick={() => handleClick('Главная')}
                 className={`${
-                  pathname === "/" ? "bg-[#333A48]" : ""
+                  pathname === "/home" ? "bg-[#333A48]" : ""
                 } flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300`}
               >
                 <div className="flex items-center gap-x-1">

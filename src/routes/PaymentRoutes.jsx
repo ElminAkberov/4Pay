@@ -8,7 +8,7 @@ import PaymentError from "../pages/Payments/PaymentError/PaymentError";
 const PaymentRoutes = [
   { path: "/payments", element: <Payment /> },
   { path: "/payments/download", element: <PaymentDownload /> },
-  { path: "/appeals", element: <Appeals /> },
+  // { path: "/appeals", element: <Appeals /> },
   { path: "/payments/create", element: <PaymentCreate /> },
   { path: "/payments/payment-errors", element: <PaymentError /> },
 ];

@@ -3,15 +3,23 @@ import axios from "axios";
 
 export const createWithdrawal = createAsyncThunk(
   "widthDrawCreate",
-  async (formData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue, getState }) => {
     try {
-      const token = "c9e80d9b1a6057d60020eeec81fbd68b9bb63607"; 
+      const state = getState(); 
+
+      console.log("state tokennn", state)
+      const token = state.login.accessToken; 
+
+      if (!token) {
+        throw new Error("No access token available");
+      }
+
       const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/withdraws/withdrawals/",
+        "https://dev.4pay.cash/api/v1/withdraws/",
         {
           params: formData,
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -35,21 +43,17 @@ const widthDrawCreateSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
       .addCase(createWithdrawal.pending, (state) => {
         state.loading = true;
         state.success = false;
         state.error = null;
       })
-
       .addCase(createWithdrawal.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.data = action.payload;
-
-        console.log("actionfullfilled:", action.payload)
+        console.log("actionfullfilled:", action.payload);
       })
-
       .addCase(createWithdrawal.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
