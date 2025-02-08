@@ -63,7 +63,7 @@ const List = () => {
         tableStyle={{  minHeight: "100vh" }}
         scrollable
         rowClassName={() => "dataTableRow"}
-        style={{ userSelect: "text", color: "white" , }}
+        style={{ userSelect: "text", color: "white", }}
       >
         <Column
           field="id"
