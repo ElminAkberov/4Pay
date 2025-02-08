@@ -33,7 +33,7 @@ const Header = () => {
       navigate("/");
     };
   return (
-    <header className=" sticky top-0 right-0 w-full bg-[#1C2434] text-white py-3 px-3 shadow-xl">
+    <header className=" sticky top-0 right-0 w-full bg-[#1C2434] text-white py-3 px-3 shadow-xl z-[99999]">
       <div className="flex justify-between items-center ">
         <div className="flex items-center">
           <div
@@ -70,15 +70,17 @@ const Header = () => {
             <div
               className={`${
                 !headerContent ? "opacity-0 invisible" : "opacity-100"
-              } w-[200px] md:h-[120px] h-[150px] rounded bg-[#24303F] p-4 text-[#fff] duration-300 shadow-2xl absolute z-30 right-0  top-16 `}
-            >
+              } w-[200px] md:h-[120px] h-[150px] rounded bg-[#24303F] p-4 text-[#fff] duration-300 shadow-2xl absolute z-[99999] right-0  top-16 `}
+          
+          
+          >
               <div className="text-center mb-4">
                 <h4>tech_mb</h4>
                 <p>Role:Admin</p>
               </div>
 
               <hr />
-              <div className=" py-1 flex flex-col items-center justify-center z-1000">
+              <div className=" py-1 flex flex-col items-center justify-center  ">
                 <div className="flex items-center gap-x-1 cursor-pointer" onClick={handleLogout} >
                   <CiLogout />
                   Выйти

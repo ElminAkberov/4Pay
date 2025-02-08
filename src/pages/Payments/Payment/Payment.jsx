@@ -3,7 +3,7 @@ import PaymentList from "./PaymentList/PaymentList";
 
 const Payment = () => {
   return (
-    <menu className="flex overflow-hidden items-center justify-center w-full p-[20px]">
+    <menu className="flex overflow-hidden items-center justify-center w-full p-[20px]  ">
       <div className="w-full px-12 ">
         <div className="w-full md:flex gap-x-3 items-center">
           <input
