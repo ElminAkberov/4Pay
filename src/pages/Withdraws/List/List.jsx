@@ -1,69 +1,131 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useDispatch, useSelector } from "react-redux";
+import { createWithdrawal } from "../../../features/widthdraws/widthDrawsCreateSlice";
 
 const List = () => {
+  const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(createWithdrawal(formData));
+  }, []);
+
+  const { data, loading } = useSelector((state) => state.widthDrawCreate);
+
+  useEffect(() => {
+    dispatch(createWithdrawal({}));
+  }, [dispatch]);
+
+  const formattedData = data
+    ? data.map((item) => ({
+        id: item.id,
+        Пользователь: item.user,
+        Pедактор: item.editor,
+        Вычет: item.rate,
+        "Сумма в USDT": item.amount,
+        "Метод Трансфера": item.transfer_method,
+        "Сумма вычета в USDT": item.amount_with_rate,
+        Статус: item.status,
+        Адрес: item.address,
+        "Хэш транзакции": item.hash_transaction,
+        "Время создания": new Date(item.created_at).toLocaleString(),
+      }))
+    : [];
+
+    const renderTruncatedText = (value, maxLength = 10) => {
+      if (!value) return ""; 
+      if (value.length > maxLength) {
+        return (
+          <span title={value}>
+            {`${value.substring(0, maxLength)}...`}
+          </span>
+        );
+      }
+      return value;
+    };
+
   return (
-    <menu className="flex satoshi overflow-hidden -z-10 text-white custom-table justify-center w-full p-5 max-[1200px]:px-10">
+    <menu className="flex overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10">
       <DataTable
-       rows={10}
-       tableStyle={{ minWidth: "80rem" }}
-       scrollable
-       rowClassName={() => "dataTableRow"}
-       style={{ userSelect: "text", overflowX: "auto" }} 
+        value={formattedData}
+        rows={10}
+        tableStyle={{ minWidth: "80rem" }}
+        scrollable
+        rowClassName={() => "dataTableRow"}
+        style={{ userSelect: "text", overflowX: "auto", color:"white" }}
       >
         <Column
           field="id"
           header="ID"
-          headerStyle={{
-            borderBottom: "1px solid #D4DAE2",
-            paddingRight: "20px",
-          }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2", padding:"10px" }}
+          bodyStyle={{ textAlign: 'center', padding: "1rem" }}
         ></Column>
         <Column
-          field="Валюта"
-          header="Валюта"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          field="Пользователь"
+          header="Пользователь"
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2", padding:"10px" }}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData.Пользователь)}
+        ></Column>
+        <Column
+          field="Pедактор"
+          header="Pедактор"
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2", padding:"10px" }}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData.Pедактор)}
         ></Column>
         <Column
           field="Сумма в USDT"
           header="Сумма в USDT"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2", padding:"10px" }}
+          bodyStyle={{ textAlign: 'center' }}
         ></Column>
         <Column
           field="Метод Трансфера"
           header="Метод Трансфера"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2" , padding:"10px"}}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData["Метод Трансфера"])}
         ></Column>
         <Column
           field="Сумма вычета в USDT"
           header="Сумма вычета в USDT"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2" , padding:"10px"}}
+          bodyStyle={{ textAlign: 'center' }}
+        ></Column>
+        <Column
+          field="Вычет"
+          header="Вычет"
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2", padding:"10px" }}
+          bodyStyle={{ textAlign: 'center' }}
         ></Column>
         <Column
           field="Статус"
           header="Статус"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2" , padding:"15px"}}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData.Статус)}
         ></Column>
         <Column
           field="Адрес"
           header="Адрес"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2" , padding:"20px" }}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData.Адрес)}
         ></Column>
         <Column
           field="Хэш транзакции"
           header="Хэш транзакции"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2",  padding:"10px" }}
+          bodyStyle={{ textAlign: 'center' }}
+          body={(rowData) => renderTruncatedText(rowData["Хэш транзакции"])}
         ></Column>
         <Column
           field="Время создания"
           header="Время создания"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2" }}
-        ></Column>
-        <Column
-          field="Время обновления"
-          header="Время обновления"
-          headerStyle={{ borderBottom: "1px solid #D4DAE2", padding: "8px" }}
+          headerStyle={{ textAlign: 'center', borderBottom: "1px solid #D4DAE2",  padding:"10px"}}
+          bodyStyle={{ textAlign: 'center' }}
         ></Column>
       </DataTable>
     </menu>
