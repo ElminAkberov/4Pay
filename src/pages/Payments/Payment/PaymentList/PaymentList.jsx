@@ -4,13 +4,13 @@ import React from "react";
 
 const PaymentList = () => {
   return (
-    <menu className="custom-table text-white satoshi flex items-center justify-center w-full">
+    <menu className="custom-table text-white satoshi flex items-center justify-center w-full z-[-1]">
       <DataTable
         rows={10}
         tableStyle={{ minWidth: "83rem" }}
         scrollable
         rowClassName={() => "dataTableRow"}
-        style={{ userSelect: "text", overflowX: "auto" }}
+        style={{ userSelect: "text", overflowX: "auto", height:"100vh"}}
       >
         <Column
           field="id"

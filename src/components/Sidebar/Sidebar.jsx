@@ -22,7 +22,11 @@ const Sidebar = () => {
       title: "Апеляции",
       title_link: "/refills",
       icon: <MdAccountBalance size={16} />,
-      links: [{ title: "Подать апелляцию", link: "/refills/create" }],
+      links: [{ title: "Подать апелляцию", link: "/refills/create" },
+        { title: "Просмотр", link: "/refills" },
+
+      ],
+   
     },
     {
       title: "Выводы",
