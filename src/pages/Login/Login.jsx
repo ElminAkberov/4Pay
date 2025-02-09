@@ -15,7 +15,7 @@ const Login = () => {
 
   useEffect(() => {
     if (success && accessToken) {
-      navigate("/home"); 
+      navigate("/home");
     }
   }, [success, accessToken, navigate]);
 
@@ -29,43 +29,50 @@ const Login = () => {
     dispatch(loginUser(login));
   };
 
-
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <form className="w-full max-w-md" onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="username">Имя пользователя</label>
-          <input
-            id="username"
-            name="username"
-            onChange={handleChange}
-            value={login.username}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password">Пароль</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-            value={login.password}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded cursor-pointer">
-          Войти
-        </button>
-      </form>
+    <>
+      <h2 className="text-white text-5xl comfortaa p-16 text-center">
+        <span className="text-5xl ">4</span>Pay{" "}
+        <sup className="text-[10px]">&copy;</sup>
+      </h2>
+      <div className="flex flex-col items-center justify-center min-h-screen mt-[-9rem]">
+        <form className="w-full max-w-md" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="username">Имя пользователя</label>
+            <input
+              id="username"
+              name="username"
+              onChange={handleChange}
+              value={login.username}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password">Пароль</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              onChange={handleChange}
+              value={login.password}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full p-2 bg-blue-500 text-white rounded cursor-pointer"
+          >
+            Войти
+          </button>
+        </form>
 
-      {/* {accessToken && (
+        {/* {accessToken && (
         <button onClick={handleLogout} className="mt-4 p-2 bg-red-500 text-white rounded">
           Выйти
         </button>
       )} */}
-    </div>
+      </div>
+    </>
   );
 };
 

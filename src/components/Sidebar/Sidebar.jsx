@@ -44,7 +44,7 @@ const Sidebar = () => {
       links: [
         { title: "Просмотр", link: "/payments/" },
         // { title: "Обращения", link: "/appeals/" },
-        { title: "Создать Заявку", link: "/payments/create/" },
+        // { title: "Создать Заявку", link: "/payments/create/" },
         { title: "Ошибки с платежами", link: "/payments/payment-errors" },
       ],
     },
