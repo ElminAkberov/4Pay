@@ -2,13 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const refillsList = createAsyncThunk(
-  "refillsList",
+  "refillsList/fetch",
   async (formData, { rejectWithValue, getState }) => {
     try {
-      const state = getState(); 
+      const state = getState();
+      console.log("Redux State:", state);
 
-      console.log("state tokennn", state)
-      const token = state.login.accessToken; 
+      let token =
+        state?.login?.accessToken || localStorage.getItem("accessToken");
 
       if (!token) {
         throw new Error("No access token available");
@@ -24,12 +25,16 @@ export const refillsList = createAsyncThunk(
         }
       );
 
-      if (!Array.isArray(response.data)) {
-        throw new Error("Expected an array from the API");
+      console.log("API Response:", response.data);
+
+      if (!Array.isArray(response.data.results)) {
+        throw new Error("Expected an array inside 'results' from the API");
       }
-      return response.data;
+
+      return response.data.results;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      console.error("API Error:", error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -38,7 +43,7 @@ const initialState = {
   loading: false,
   success: false,
   error: null,
-  data: null,
+  data: [],
 };
 
 const refillsListSlice = createSlice({
@@ -55,13 +60,14 @@ const refillsListSlice = createSlice({
       .addCase(refillsList.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.data = action.payload;
-        console.log("actionfullfilled:", action.payload);
+        state.data = action.payload || [];
+        console.log("Data Loaded:", action.payload);
       })
       .addCase(refillsList.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = action.payload;
+        console.error("Redux Error:", action.payload);
       });
   },
 });
