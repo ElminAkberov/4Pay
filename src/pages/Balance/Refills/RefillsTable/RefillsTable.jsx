@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { refillsList } from "../../../../features/refillisList/refillsListSlice";
 import styled from "styled-components";
 import "./refillsTable.css";
+import { NavLink } from "react-router-dom";
 
 const RefillsTable = () => {
   const [formData, setFormData] = useState({});
@@ -50,7 +51,7 @@ const RefillsTable = () => {
       </div>
     );
   };
-
+  
   const StyledMenu = styled.div`
     flex: 1;
     overflow: hidden;
@@ -86,80 +87,90 @@ const RefillsTable = () => {
           ) : error ? (
             <p style={{ color: "red" }}>Error: {error}</p>
           ) : (
-            <DataTable
-              rows={10}
-              tableStyle={{ minHeight: "100vh" }}
-              scrollable
-              value={formattedData}
-              style={{ userSelect: "text", overflowX: "auto", color: "white" }}
-              className="refills_table"
-            >
-              <Column
-                field="id"
-                header="ID"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
+            <>
+              <DataTable
+                rows={10}
+                tableStyle={{ minHeight: "100vh" }}
+                scrollable
+                value={formattedData}
+                style={{
+                  userSelect: "text",
+                  overflowX: "auto",
+                  color: "white",
                 }}
-                bodyStyle={{ textAlign: "center" }}
-              />
-              <Column
-                field="Статус"
-                header="Статус"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-              />
-              <Column
-                field="Платеж"
-                header="Платеж"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-                body={(rowData) => renderTruncatedText(rowData.Платеж)}
-              />
-              <Column
-                field="Сумма"
-                header="Сумма"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-              />
-              <Column
-                field="Квитанция"
-                header="Квитанция"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-                body={(rowData) => renderTruncatedText(rowData.Квитанция)}
-              />
-              <Column
-                field="Дата создания"
-                header="Дата создания"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-              />
-              <Column
-                field="Дата обновления"
-                header="Дата обновления"
-                headerStyle={{
-                  borderBottom: "1px solid #D4DAE2",
-                  padding: "1rem",
-                }}
-                bodyStyle={{ textAlign: "center" }}
-              />
-            </DataTable>
+                className="refills_table"
+              >
+                <Column
+                  field="id"
+                  header="ID"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                />
+                <Column
+                  field="Статус"
+                  header="Статус"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                />
+                <Column
+                  field="Платеж"
+                  header="Платеж"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                  body={(rowData) => renderTruncatedText(rowData.Платеж)}
+                />
+                <Column
+                  field="Сумма"
+                  header="Сумма"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                />
+                <Column
+                  field="Квитанция"
+                  header="Квитанция"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                  body={(rowData) => (
+                    <NavLink to={rowData.Квитанция} target="_blank">
+                      {renderTruncatedText(rowData.Квитанция)}
+                    </NavLink>
+                  )}
+                />
+                <Column
+                  field="Дата создания"
+                  header="Дата создания"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                />
+                <Column
+                  field="Дата обновления"
+                  header="Дата обновления"
+                  headerStyle={{
+                    borderBottom: "1px solid #D4DAE2",
+                    padding: "1rem",
+                  }}
+                  bodyStyle={{ textAlign: "center" }}
+                />
+              </DataTable>
+            </>
           )}
         </StyledMenu>
       </menu>
