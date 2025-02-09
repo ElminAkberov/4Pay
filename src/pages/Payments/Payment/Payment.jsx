@@ -3,9 +3,9 @@ import PaymentList from "./PaymentList/PaymentList";
 
 const Payment = () => {
   return (
-    <menu className="flex overflow-hidden items-center justify-center w-full p-[20px]  ">
-      <div className="w-full px-12 ">
-        <div className="w-full md:flex gap-x-3 items-center">
+    <menu className="flex overflow-hidden items-center justify-center w-full">
+      <div className="w-[100%]">
+        <div className="w-full md:flex gap-x-3 items-center p-6">
           <input
            className="w-full rounded-lg border border-[#3d4d60] satoshi bg-white py-2 px-5 text-black outline-none transition focus:border-[#3C50E0] active:border-[#3C50E0]  "
             placeholder="Поиск"

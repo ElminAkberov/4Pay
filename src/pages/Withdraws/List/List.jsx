@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useDispatch, useSelector } from "react-redux";
-import { createWithdrawal } from "../../../features/widthdraws/widthDrawsCreateSlice";
+import { widthdrawList } from "../../../features/widthdraws/widthDrawsListSlice";
 import { MdContentCopy } from "react-icons/md";
 
 const List = () => {
@@ -10,13 +10,13 @@ const List = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(createWithdrawal(formData));
+    dispatch(widthdrawList(formData));
   }, []);
 
-  const { data, loading } = useSelector((state) => state.widthDrawCreate);
+  const { data, loading } = useSelector((state) => state.widthdrawList);
 
   useEffect(() => {
-    dispatch(createWithdrawal({}));
+    dispatch(widthdrawList({}));
   }, [dispatch]);
 
   const formattedData = data

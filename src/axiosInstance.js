@@ -28,6 +28,7 @@ api.interceptors.response.use(
       try {
         const response = await store.dispatch(refreshToken()).unwrap();
         localStorage.setItem("accessToken", response);
+        api.defaults.headers.Authorization = `Bearer ${response}`; // Global olarak güncelle
         originalRequest.headers.Authorization = `Bearer ${response}`;
         return api(originalRequest);
       } catch (err) {
@@ -35,6 +36,7 @@ api.interceptors.response.use(
         return Promise.reject(err);
       }
     }
+    
     return Promise.reject(error);
   }
 );
