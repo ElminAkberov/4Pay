@@ -4,36 +4,35 @@ import { Column } from "primereact/column";
 import { useDispatch, useSelector } from "react-redux";
 import { refillsList } from "../../../../features/refillisList/refillsListSlice";
 import styled from "styled-components";
-import "./refillsTable.css";
 import { NavLink } from "react-router-dom";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const RefillsTable = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ page: 1 });
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.refillsList);
+  const { data, loading, error, next, previous } = useSelector(
+    (state) => state.refillsList
+  );
 
   useEffect(() => {
     dispatch(refillsList(formData));
   }, [dispatch, formData]);
 
-  const formattedData = data?.length
-    ? data.map((item) => ({
-        id: item.id,
-        Статус: item.status,
-        Платеж: item.payment,
-        Сумма: item.amount,
-        Квитанция: item.receipt,
-        "Дата создания": item.created_at
-          ? new Date(item.created_at).toLocaleString()
-          : "N/A",
-        "Дата обновления": item.updated_at
-          ? new Date(item.updated_at).toLocaleString()
-          : "N/A",
-      }))
-    : [];
+  const formattedData = data?.map((item) => ({
+    id: item.id,
+    Статус: item.status,
+    Платеж: item.payment,
+    Сумма: item.amount,
+    Квитанция: item.receipt,
+    "Дата создания": item.created_at
+      ? new Date(item.created_at).toLocaleString()
+      : "N/A",
+    "Дата обновления": item.updated_at
+      ? new Date(item.updated_at).toLocaleString()
+      : "N/A",
+  }));
 
   const renderTruncatedText = (value, maxLength = 10) => {
-    if (!value) return "N/A";
     const stringValue = String(value);
     return (
       <div
@@ -51,7 +50,18 @@ const RefillsTable = () => {
       </div>
     );
   };
-  
+
+  const handleNextPage = () => {
+    if (next) {
+      setFormData({ page: formData.page + 1 });
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (previous) {
+      setFormData({ page: formData.page - 1 });
+    }
+  };
   const StyledMenu = styled.div`
     flex: 1;
     overflow: hidden;
@@ -77,7 +87,6 @@ const RefillsTable = () => {
       scrollbar-color: #1a222c #f1f1f1;
     }
   `;
-
   return (
     <>
       <menu className="flex overflow-hidden custom-table justify-center w-full max-[1200px]:px-10">
@@ -170,6 +179,24 @@ const RefillsTable = () => {
                   bodyStyle={{ textAlign: "center" }}
                 />
               </DataTable>
+
+              <div className="pagination text-white flex justify-center gap-x-2 ">
+                <button
+                  className="cursor-pointer"
+                  onClick={handlePreviousPage}
+                  disabled={!previous}
+                >
+                  <FaAngleLeft size={25} />
+                </button>
+                <span>{formData["page"]}</span>
+                <button
+                  className="cursor-pointer"
+                  onClick={handleNextPage}
+                  disabled={!next}
+                >
+                  <FaAngleRight size={25} />
+                </button>
+              </div>
             </>
           )}
         </StyledMenu>

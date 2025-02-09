@@ -1,39 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { refreshToken } from "../login/loginSlice";
 
 export const refillsList = createAsyncThunk(
   "refillsList/fetch",
-  async (formData, { rejectWithValue, getState }) => {
+  async (formData, { rejectWithValue, getState, dispatch }) => {
     try {
       const state = getState();
-      console.log("Redux State:", state);
-
-      let token =
-        state?.login?.accessToken || localStorage.getItem("accessToken");
-
+      let token = state?.login?.accessToken || localStorage.getItem("accessToken");
       if (!token) {
         throw new Error("No access token available");
       }
 
-      const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/appeals/",
-        {
-          params: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("https://dev.4pay.cash/api/v1/appeals/", {
+        params: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      console.log("API Response:", response.data);
-
-      if (!Array.isArray(response.data.results)) {
-        throw new Error("Expected an array inside 'results' from the API");
+      if (!response.data) {
+        throw new Error("Expected a valid response from the API");
       }
 
-      return response.data.results;
+      return response.data;
     } catch (error) {
-      console.error("API Error:", error);
+      if (error.response?.status === 401) {
+        try {
+          await dispatch(refreshToken());
+          const state = getState();
+          const newToken = state?.login?.accessToken || localStorage.getItem("accessToken");
+          const retryResponse = await axios.get("https://dev.4pay.cash/api/v1/appeals/", {
+            params: formData,
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          });
+          return retryResponse.data;
+        } catch (refreshError) {
+          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+        }
+      }
+
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -44,6 +52,8 @@ const initialState = {
   success: false,
   error: null,
   data: [],
+  next: null,
+  previous: null,
 };
 
 const refillsListSlice = createSlice({
@@ -60,14 +70,14 @@ const refillsListSlice = createSlice({
       .addCase(refillsList.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.data = action.payload || [];
-        console.log("Data Loaded:", action.payload);
+        state.data = action.payload.results || [];
+        state.next = action.payload.next;
+        state.previous = action.payload.previous;
       })
       .addCase(refillsList.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = action.payload;
-        console.error("Redux Error:", action.payload);
       });
   },
 });

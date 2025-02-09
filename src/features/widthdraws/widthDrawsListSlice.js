@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { refreshToken } from "../login/loginSlice";
 
 export const widthdrawList = createAsyncThunk(
-  "widthdrawList",
-  async (formData, { rejectWithValue, getState }) => {
+  "widthdrawList/fetch",
+  async (formData, { rejectWithValue, getState, dispatch }) => {
     try {
-      const state = getState(); 
-
-      console.log("state tokennn", state)
-      const token = state.login.accessToken; 
+      const state = getState();
+      const token = state.login.accessToken;
 
       if (!token) {
         throw new Error("No access token available");
@@ -23,9 +22,33 @@ export const widthdrawList = createAsyncThunk(
           },
         }
       );
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      if (error.response?.status === 401) {
+        try {
+          await dispatch(refreshToken());
+
+          const state = getState();
+          const newToken = state.login.accessToken; 
+
+          const retryResponse = await axios.get(
+            "https://dev.4pay.cash/api/v1/withdraws/",
+            {
+              params: formData,
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            }
+          );
+
+          return retryResponse.data;
+        } catch (refreshError) {
+          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+        }
+      }
+
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -52,7 +75,6 @@ const widthDrawListSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.data = action.payload;
-        console.log("actionfullfilled:", action.payload);
       })
       .addCase(widthdrawList.rejected, (state, action) => {
         state.loading = false;

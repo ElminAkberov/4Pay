@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, logoutUser } from "../../features/login/loginSlice";
+import {
+  loginUser,
+  logoutUser,
+  startTokenRefresh,
+  stopTokenRefresh,
+} from "../../features/login/loginSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -15,10 +20,14 @@ const Login = () => {
 
   useEffect(() => {
     if (success && accessToken) {
+      dispatch(startTokenRefresh());
       navigate("/home");
     }
-  }, [success, accessToken, navigate]);
 
+    return () => {
+      dispatch(stopTokenRefresh());
+    };
+  }, [success, accessToken, dispatch, navigate]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
@@ -29,10 +38,15 @@ const Login = () => {
     dispatch(loginUser(login));
   };
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/login");
+  };
+
   return (
     <>
       <h2 className="text-white text-5xl comfortaa p-16 text-center">
-        <span className="text-5xl ">4</span>Pay{" "}
+        <span className="text-5xl">4</span>Pay{" "}
         <sup className="text-[10px]">&copy;</sup>
       </h2>
       <div className="flex flex-col items-center justify-center min-h-screen mt-[-9rem]">
@@ -65,12 +79,6 @@ const Login = () => {
             Войти
           </button>
         </form>
-
-        {/* {accessToken && (
-        <button onClick={handleLogout} className="mt-4 p-2 bg-red-500 text-white rounded">
-          Выйти
-        </button>
-      )} */}
       </div>
     </>
   );

@@ -1,16 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Kullanıcı giriş yapınca çağırılacak API
 export const loginUser = createAsyncThunk(
   "login/loginUser",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://dev.4pay.cash/api/v1/auth/login/", formData, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(
+        "https://dev.4pay.cash/api/v1/auth/login/",
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-      // Token'ları localStorage'a kaydet
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
       localStorage.setItem("role", response.data.role);
@@ -22,7 +24,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Access token yenileme
 export const refreshToken = createAsyncThunk(
   "login/refreshToken",
   async (_, { rejectWithValue }) => {
@@ -30,9 +31,11 @@ export const refreshToken = createAsyncThunk(
       const refresh = localStorage.getItem("refreshToken");
       if (!refresh) throw new Error("No refresh token available");
 
-      const response = await axios.post("https://dev.4pay.cash/api/v1/auth/refresh/", { refresh });
+      const response = await axios.post(
+        "https://dev.4pay.cash/api/v1/auth/refresh/",
+        { refresh }
+      );
 
-      // Yeni access token'ı kaydet
       localStorage.setItem("accessToken", response.data.access);
 
       return response.data.access;
@@ -49,6 +52,7 @@ const initialState = {
   accessToken: localStorage.getItem("accessToken") || null,
   refreshToken: localStorage.getItem("refreshToken") || null,
   role: localStorage.getItem("role") || null,
+  refreshInterval: null,
 };
 
 const loginSlice = createSlice({
@@ -62,6 +66,26 @@ const loginSlice = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       state.role = null;
+
+      if (state.refreshInterval) {
+        clearInterval(state.refreshInterval);
+        state.refreshInterval = null;
+      }
+    },
+    startTokenRefresh: (state) => {
+      if (!state.refreshInterval) {
+        const intervalId = setInterval(() => {
+          state.refreshToken && refreshToken();
+        }, 10000);
+
+        state.refreshInterval = intervalId;
+      }
+    },
+    stopTokenRefresh: (state) => {
+      if (state.refreshInterval) {
+        clearInterval(state.refreshInterval);
+        state.refreshInterval = null;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -77,6 +101,10 @@ const loginSlice = createSlice({
         state.accessToken = action.payload.access;
         state.refreshToken = action.payload.refresh;
         state.role = action.payload.role;
+        state.refreshInterval && clearInterval(state.refreshInterval);
+        state.refreshInterval = setInterval(() => {
+          refreshToken();
+        }, 10000);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -89,5 +117,6 @@ const loginSlice = createSlice({
   },
 });
 
-export const { logoutUser } = loginSlice.actions;
+export const { logoutUser, startTokenRefresh, stopTokenRefresh } =
+  loginSlice.actions;
 export default loginSlice.reducer;

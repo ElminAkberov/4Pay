@@ -50,7 +50,6 @@ const paymentsListSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.data = action.payload;
-        console.log("actionfullfilled:", action.payload);
       })
       .addCase(paymentsLists.rejected, (state, action) => {
         state.loading = false;
