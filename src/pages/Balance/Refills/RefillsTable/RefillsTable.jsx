@@ -7,16 +7,18 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-const RefillsTable = () => {
+const RefillsTable = ({ filters }) => {
+  // console.log(filters);
   const [formData, setFormData] = useState({ page: 1 });
   const dispatch = useDispatch();
   const { data, loading, error, next, previous } = useSelector(
     (state) => state.refillsList
   );
-
+  // console.log(data);
   useEffect(() => {
-    dispatch(refillsList(formData));
-  }, [dispatch, formData]);
+    dispatch(refillsList({ page: formData.page, filters }));
+  }, [dispatch, formData, filters]);
+  
 
   const formattedData = data?.map((item) => ({
     id: item.id,
@@ -53,15 +55,16 @@ const RefillsTable = () => {
 
   const handleNextPage = () => {
     if (next) {
-      setFormData({ page: formData.page + 1 });
+      setFormData((prev) => ({ ...prev, page: prev.page + 1 }));
     }
   };
-
+  
   const handlePreviousPage = () => {
     if (previous) {
-      setFormData({ page: formData.page - 1 });
+      setFormData((prev) => ({ ...prev, page: prev.page - 1 }));
     }
   };
+  
   const StyledMenu = styled.div`
     flex: 1;
     overflow: hidden;

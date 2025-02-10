@@ -4,20 +4,28 @@ import { refreshToken } from "../login/loginSlice";
 
 export const refillsList = createAsyncThunk(
   "refillsList/fetch",
-  async (formData, { rejectWithValue, getState, dispatch }) => {
+  async ({ page, filters }, { rejectWithValue, getState, dispatch }) => {
     try {
       const state = getState();
-      let token = state?.login?.accessToken || localStorage.getItem("accessToken");
+      let token =
+        state?.login?.accessToken || localStorage.getItem("accessToken");
       if (!token) {
         throw new Error("No access token available");
       }
 
-      const response = await axios.get("https://dev.4pay.cash/api/v1/appeals/", {
-        params: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // Filtreleri API'ye uygun şekilde ekleyelim
+      const params = { page, ...filters };
+
+      console.log(params.filters);
+      const response = await axios.get(
+        "https://dev.4pay.cash/api/v1/appeals/",
+        {
+          params, // Burada filtreleri API çağrısına dahil ettik
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.data) {
         throw new Error("Expected a valid response from the API");
@@ -29,16 +37,23 @@ export const refillsList = createAsyncThunk(
         try {
           await dispatch(refreshToken());
           const state = getState();
-          const newToken = state?.login?.accessToken || localStorage.getItem("accessToken");
-          const retryResponse = await axios.get("https://dev.4pay.cash/api/v1/appeals/", {
-            params: formData,
-            headers: {
-              Authorization: `Bearer ${newToken}`,
-            },
-          });
+          const newToken =
+            state?.login?.accessToken || localStorage.getItem("accessToken");
+
+          const retryResponse = await axios.get(
+            "https://dev.4pay.cash/api/v1/appeals/",
+            {
+              params,
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            }
+          );
           return retryResponse.data;
         } catch (refreshError) {
-          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+          return rejectWithValue(
+            "Failed to refresh token: " + refreshError.message
+          );
         }
       }
 

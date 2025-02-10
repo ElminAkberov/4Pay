@@ -22,31 +22,35 @@ const Sidebar = () => {
       title: "Апеляции",
       title_link: "/refills",
       icon: <MdAccountBalance size={16} />,
-      links: [{ title: "Подать апелляцию", link: "/refills/create" },
-        { title: "Просмотр", link: "/refills" },
-
-      ],
-   
+      // links: [
+      //   // { title: "Подать апелляцию", link: "/refills/create" },
+      //   { title: "Просмотр", link: "/refills" },
+      // ],
     },
     {
       title: "Выводы",
       title_link: "/withdraws/list",
       icon: <HiOutlineBanknotes size={16} />,
-      links: [
-        { title: "Создать заявку", link: "/withdraws/create" },
-        { title: "Просмотр", link: "/withdraws/list" },
-      ],
+      // links: [
+      //   // { title: "Создать заявку", link: "/withdraws/create" },
+      //   { title: "Просмотр", link: "/withdraws/list" },
+      // ],
     },
     {
       title: "Заявки",
       title_link: "/payments/",
       icon: <FaInbox size={16} />,
-      links: [
-        { title: "Просмотр", link: "/payments/" },
-        // { title: "Обращения", link: "/appeals/" },
-        // { title: "Создать Заявку", link: "/payments/create/" },
-        { title: "Ошибки с платежами", link: "/payments/payment-errors" },
-      ],
+      // links: [
+      //   { title: "Просмотр", link: "/payments/" },
+      //   // { title: "Обращения", link: "/appeals/" },
+      //   // { title: "Создать Заявку", link: "/payments/create/" },
+      //   { title: "Ошибки с платежами", link: "/payments/payment-errors" },
+      // ],
+    },
+    {
+      title: "Ошибки с платежами",
+      title_link: "/payments/payment-errors",
+      icon: <FaInbox size={16} />,
     },
   ];
 
@@ -59,7 +63,10 @@ const Sidebar = () => {
         } w-[290px]`}
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-white text-2xl comfortaa"><span className="text-4xl ">4</span>Pay <sup className="text-[14px]">&copy;</sup></h2>
+          <h2 className="text-white text-2xl comfortaa">
+            <span className="text-4xl ">4</span>Pay{" "}
+            <sup className="text-[14px]">&copy;</sup>
+          </h2>
           <GoArrowLeft
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             size={25}
@@ -74,7 +81,7 @@ const Sidebar = () => {
             <li className="mb-2">
               <NavLink
                 to="/"
-                onClick={() => handleClick('Главная')}
+                onClick={() => handleClick("Главная")}
                 className={`${
                   pathname === "/home" ? "bg-[#333A48]" : ""
                 } flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300`}
@@ -86,46 +93,25 @@ const Sidebar = () => {
               </NavLink>
             </li>
             {menus.map((menu, index) => {
-              const isActive = menu.links.some(link => pathname === link.link);
               return (
                 <li key={index} className="mb-2">
-                  <div
+                  <NavLink
+                    to={menu.title_link}
                     onClick={() => handleClick(menu.title)}
                     className={`flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300 ${
-                      selectedMenu === menu.title || isActive ? "bg-[#333A48]" : ""
+                      selectedMenu === menu.title ? "bg-[#333A48]" : ""
                     }`}
                   >
                     <div className="flex items-center gap-x-1">
                       {menu.icon}
                       <p className="font-medium">{menu.title}</p>
                     </div>
-                    <IoChevronDown
-                      size={20}
-                      className={`transition-transform duration-300 ${
-                        selectedMenu === menu.title || isActive ? "rotate-180" : ""
-                      }`}
-                    />
-                  </div>
+                  </NavLink>
                   <div
                     className={`ml-10 transition-all duration-300 overflow-hidden ${
-                      selectedMenu === menu.title || isActive ? "max-h-[200px]" : "max-h-0"
+                      selectedMenu === menu.title ? "max-h-[200px]" : "max-h-0"
                     }`}
-                  >
-                    <ul>
-                      {menu.links.map((link, idx) => (
-                        <li key={idx} className="my-3">
-                          <NavLink
-                            to={link.link}
-                            className={`font-normal hover:text-[#fff] duration-300 ${
-                              pathname === link.link ? "text-[#fff]" : "text-[#8A99AF]"
-                            }`}
-                          >
-                            {link.title}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  ></div>
                 </li>
               );
             })}
