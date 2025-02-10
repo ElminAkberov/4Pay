@@ -53,11 +53,11 @@ build:
     - echo "Starting web build"
     - /kaniko/executor
       --context $CI_PROJECT_DIR
-      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --dockerfile $CI_PROJECT_DIR/Dockerfile.development
       --destination $CI_REGISTRY_IMAGE/development:$IMAGE_TAG
     - /kaniko/executor
       --context $CI_PROJECT_DIR
-      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --dockerfile $CI_PROJECT_DIR/Dockerfile.production
       --destination $CI_REGISTRY_IMAGE/production:$IMAGE_TAG
     - echo "Web build completed"
 
