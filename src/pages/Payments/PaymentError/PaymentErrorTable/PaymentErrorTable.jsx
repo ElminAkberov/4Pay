@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DataTable } from "primereact/datatable";
-import Column from "antd/es/table/Column";
 import "./paymentError.css";
 import { paymentsErrorList } from "../../../../features/paymentList/paymentErrorListSlice";
+import { Column } from "primereact/column";
 
 const PaymentErrorTable = () => {
   const dispatch = useDispatch();
@@ -13,13 +13,21 @@ const PaymentErrorTable = () => {
   useEffect(() => {
     dispatch(paymentsErrorList({}));
   }, [dispatch]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p style={{ color: "red" }}>Error: {error}</p>;
+  }
+
+  const tableData = Array.isArray(data) ? data : [];
+
   return (
     <div className="satoshi">
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>No avaiable data</p>}
-
       <DataTable
-        value={data}
+        value={tableData}
         rows={10}
         tableStyle={{ minWidth: "83rem" }}
         scrollable
