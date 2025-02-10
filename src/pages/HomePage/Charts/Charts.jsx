@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dashboardThunk } from "../../../features/dashboard/dashboardSlice";
@@ -11,39 +12,59 @@ const Charts = () => {
     dispatch(dashboardThunk(formData));
   }, []);
 
+
+  
   const { data, loading } = useSelector((state) => state.dashboard);
 
+
+  useEffect(() => {
+    if (data?.chart) {
+      setState({
+        series: [
+          {
+            name: "Payments",
+            data: extendedPayments,
+          },
+        ],
+        options: {
+          ...state.options,
+          xaxis: {
+            ...state.options.xaxis,
+            categories: formattedDays,
+          },
+          yaxis: {
+            ...state.options.yaxis,
+            max: Math.max(...extendedPayments) + 1,
+          },
+        },
+      });
+    }
+  }, [data]);
+  
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
 
   const paymentsByDays = data?.chart?.payments_by_days || [];
   const timelineDays = data?.chart?.timeline_days || [];
 
 
+  const extendedPayments = timelineDays.map(date => {
+    const payment = paymentsByDays.find(p => p.date === date);
+    return payment ? payment.total_amount : 0;
+  });
 
-  const extendedPayments = [...paymentsByDays];
-  while (extendedPayments.length < timelineDays.length) {
-    extendedPayments.push(0);
-  }
+  console.log("paymentsByDays:", paymentsByDays);
+console.log("timelineDays:", timelineDays);
+console.log("extendedPayments:", extendedPayments);
 
   const formattedDays = timelineDays.map((dateString) => {
     const date = new Date(dateString);
     return `${date.getDate()} ${months[date.getMonth()]}`;
   });
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     series: [
       {
         name: "Payments",
@@ -110,9 +131,7 @@ const Charts = () => {
           formatter: function (_, { dataPointIndex }) {
             const dateString = timelineDays[dataPointIndex];
             const date = new Date(dateString);
-            return `${date.getDate()}/${
-              date.getMonth() + 1
-            }/${date.getFullYear()}`;
+            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
           },
         },
       },
@@ -162,7 +181,7 @@ const Charts = () => {
           <h4 style={{ color: "#fff" }}>Общее количество заказов</h4>
           <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
             {formatCurrencyData(
-              data?.currency?.reduce((sum, item) => sum + item.total_count, 0)
+              currency.reduce((sum, item) => sum + item.total_count, 0)
             )}
           </div>
         </div>
@@ -179,10 +198,7 @@ const Charts = () => {
           <h4 style={{ color: "#fff" }}>Завершенные заказы</h4>
           <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
             {formatCurrencyData(
-              data?.currency?.reduce(
-                (sum, item) => sum + item.completed_count,
-                0
-              )
+              currency.reduce((sum, item) => sum + item.completed_count, 0)
             )}
           </div>
         </div>
@@ -199,7 +215,7 @@ const Charts = () => {
           <h4 style={{ color: "#fff" }}>Общая сумма заказов</h4>
           <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
             {formatCurrencyData(
-              data?.currency?.reduce((sum, item) => sum + item.total_amount, 0)
+              currency.reduce((sum, item) => sum + item.total_amount, 0)
             )}
           </div>
         </div>
@@ -216,7 +232,7 @@ const Charts = () => {
           <h4 style={{ color: "#fff" }}>Конверсия</h4>
           <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
             {formatCurrencyData(
-              data?.currency?.reduce((sum, item) => sum + item.conversion, 0)
+              currency.reduce((sum, item) => sum + item.conversion, 0)
             )}
           </div>
         </div>
