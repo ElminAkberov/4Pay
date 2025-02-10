@@ -15,7 +15,6 @@ export const loginUser = createAsyncThunk(
 
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
-      localStorage.setItem("role", response.data.role);
 
       return response.data;
     } catch (error) {
@@ -63,6 +62,7 @@ const loginSlice = createSlice({
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("role");
+      localStorage.removeItem("username");
       state.accessToken = null;
       state.refreshToken = null;
       state.role = null;
