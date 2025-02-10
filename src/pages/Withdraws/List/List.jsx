@@ -1,13 +1,17 @@
-
 import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useDispatch, useSelector } from "react-redux";
 import { widthdrawList } from "../../../features/widthdraws/widthDrawsListSlice";
 import { MdContentCopy } from "react-icons/md";
+import Success from "../../../components/Success/Success";
+import { FaSquarePollHorizontal } from "react-icons/fa6";
+import ReportModal from "./ReportModal/ReportModal";
 
 const List = () => {
   const [formData, setFormData] = useState({});
+  const [success, setSuccess] = useState({ successInfo: false, message: "" });
+  const [report, setReport] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,14 +46,30 @@ const List = () => {
     const stringValue = String(value);
 
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
         <span title={stringValue} style={{ flex: 1, textAlign: "center" }}>
-          {stringValue.length > maxLength ? `${stringValue.substring(0, maxLength)}...` : stringValue}
+          {stringValue.length > maxLength
+            ? `${stringValue.substring(0, maxLength)}...`
+            : stringValue}
         </span>
         {showCopyIcon && (
           <MdContentCopy
-            style={{ marginLeft: "5px", cursor: "pointer", flexShrink: 0 }}
-            onClick={() => navigator.clipboard.writeText(stringValue)}
+            style={{ marginLeft: "5px", cursor: "pointer" }}
+            onClick={() => {
+              navigator.clipboard.writeText(stringValue);
+              setSuccess({
+                successInfo: true,
+                message: "Успешно скопировано!",
+              });
+              setTimeout(() => setSuccess({ successInfo: false }), 2000);
+            }}
           />
         )}
       </div>
@@ -57,84 +77,147 @@ const List = () => {
   };
 
   return (
-    <menu className="flex overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10 ">
+    <menu className="flex flex-col overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10 ">
+      <Success success={success["successInfo"]} message={success["message"]} />
+      <div title="Report" className="w-full flex justify-end pr-5 ">
+        <FaSquarePollHorizontal
+          size={30}
+          className="cursor-pointer"
+          color="#fff"
+          onClick={() => setReport(!report)}
+        />
+        <ReportModal setReport={setReport} report={report} />
+      </div>
       <DataTable
         value={formattedData}
         rows={10}
-        tableStyle={{ width: "80%", minHeight: "100vh" }}
+        tableStyle={{ minHeight: "100vh" }}
         scrollable
         style={{ userSelect: "text", color: "white" }}
       >
         <Column
           field="id"
           header="ID"
-          headerStyle={{padding:"1rem", textAlign: "center", borderBottom: "1px solid #D4DAE2",  }}
+          headerStyle={{
+            padding: "1rem",
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+          }}
           bodyStyle={{ textAlign: "center", padding: "1rem" }}
         ></Column>
         <Column
           field="Пользователь"
           header="Пользователь"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2",padding:"0.5rem"  }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "0.5rem",
+          }}
           bodyStyle={{ textAlign: "center" }}
           body={(rowData) => renderTruncatedText(rowData.Пользователь)}
         ></Column>
         <Column
           field="Pедактор"
           header="Pедактор"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2",padding:"0.5rem"  }}
-          bodyStyle={{ textAlign: "center"}}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "0.5rem",
+          }}
+          bodyStyle={{ textAlign: "center" }}
           body={(rowData) => renderTruncatedText(rowData.Pедактор)}
         ></Column>
         <Column
           field="Сумма в USDT"
           header="Сумма в USDT"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+          }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           field="Метод Трансфера"
           header="Метод Трансфера"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", width: "150px" }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+            width: "150px",
+          }}
           bodyStyle={{ textAlign: "center" }}
           body={(rowData) => renderTruncatedText(rowData["Метод Трансфера"])}
         ></Column>
         <Column
           field="Сумма вычета в USDT"
           header="Сумма вычета в USDT"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", width: "150px" }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+            width: "150px",
+          }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           field="Вычет"
           header="Вычет"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", width: "100px" }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+            width: "100px",
+          }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           field="Статус"
           header="Статус"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "1rem", width: "150px" }}
-          bodyStyle={{ textAlign: "center"}}
-          body={(rowData) => renderTruncatedText(rowData.Статус,8)}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "1rem",
+            width: "150px",
+          }}
+          bodyStyle={{ textAlign: "center" }}
+          body={(rowData) => renderTruncatedText(rowData.Статус, 8)}
         ></Column>
         <Column
           field="Адрес"
           header="Адрес"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "2.5rem", width: "200px" }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "2.5rem",
+            width: "200px",
+          }}
           bodyStyle={{ textAlign: "center" }}
-          body={(rowData) => renderTruncatedText(rowData.Адрес,8, true)}
+          body={(rowData) => renderTruncatedText(rowData.Адрес, 8, true)}
         ></Column>
         <Column
           field="Хэш транзакции"
           header="Хэш транзакции"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", width: "200px" }}
-          bodyStyle={{ textAlign: "center" }}
-          body={(rowData) => renderTruncatedText(rowData["Хэш транзакции"], 10, true)}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+            width: "200px",
+          }}
+          bodyStyle={{ textAlign: "center", padding: "20px", }}
+          body={(rowData) =>
+            renderTruncatedText(rowData["Хэш транзакции"], 10, true)
+          }
         ></Column>
         <Column
           field="Время создания"
           header="Время создания"
-          headerStyle={{ textAlign: "center", borderBottom: "1px solid #D4DAE2", padding: "10px", width: "200px" }}
+          headerStyle={{
+            textAlign: "center",
+            borderBottom: "1px solid #D4DAE2",
+            padding: "10px",
+            width: "200px",
+          }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
       </DataTable>
