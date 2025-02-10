@@ -20,7 +20,7 @@ export const refillsList = createAsyncThunk(
       const response = await axios.get(
         "https://dev.4pay.cash/api/v1/appeals/",
         {
-          params, // Burada filtreleri API çağrısına dahil ettik
+          params,
           headers: {
             Authorization: `Bearer ${token}`,
           },

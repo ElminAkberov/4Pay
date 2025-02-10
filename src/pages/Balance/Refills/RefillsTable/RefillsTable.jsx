@@ -5,16 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { refillsList } from "../../../../features/refillisList/refillsListSlice";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaImages } from "react-icons/fa";
 
 const RefillsTable = ({ filters }) => {
-  // console.log(filters);
   const [formData, setFormData] = useState({ page: 1 });
   const dispatch = useDispatch();
   const { data, loading, error, next, previous } = useSelector(
     (state) => state.refillsList
   );
-  // console.log(data);
   useEffect(() => {
     dispatch(refillsList({ page: formData.page, filters }));
   }, [dispatch, formData, filters]);
@@ -158,7 +156,8 @@ const RefillsTable = ({ filters }) => {
                   }}
                   bodyStyle={{ textAlign: "center" }}
                   body={(rowData) => (
-                    <NavLink to={rowData.Квитанция} target="_blank">
+                    <NavLink to={rowData.Квитанция} target="_blank" className={"flex items-center gap-x-1"}>
+                      <FaImages />
                       {renderTruncatedText(rowData.Квитанция)}
                     </NavLink>
                   )}
