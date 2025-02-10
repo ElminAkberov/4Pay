@@ -14,7 +14,7 @@ const App = () => {
 
     const interval = setInterval(() => {
       dispatch(refreshToken());
-    }, 10000);
+    }, 30000);
 
     return () => {
       clearInterval(interval);

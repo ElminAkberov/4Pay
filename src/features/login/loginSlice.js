@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+
 export const loginUser = createAsyncThunk(
   "login/loginUser",
   async (formData, { rejectWithValue }) => {
@@ -38,6 +39,18 @@ export const refreshToken = createAsyncThunk(
   }
 );
 
+export const startTokenRefresh = () => (dispatch, getState) => {
+  const { login } = getState();
+  if (!login.refreshInterval) {
+    const intervalId = setInterval(() => {
+      dispatch(refreshToken());
+    }, 10000);
+
+    dispatch(setRefreshInterval(intervalId)); 
+  }
+};
+
+
 const initialState = {
   loading: false,
   success: false,
@@ -66,15 +79,8 @@ const loginSlice = createSlice({
         state.refreshInterval = null;
       }
     },
-    startTokenRefresh: (state, action) => {
-      if (!state.refreshInterval) {
-        const intervalId = setInterval(() => {
-          // Using dispatch to refresh token properly inside the interval
-          action.dispatch(refreshToken());
-        }, 10000);
-
-        state.refreshInterval = intervalId;
-      }
+    setRefreshInterval: (state, action) => {
+      state.refreshInterval = action.payload; 
     },
     stopTokenRefresh: (state) => {
       if (state.refreshInterval) {
@@ -96,10 +102,6 @@ const loginSlice = createSlice({
         state.accessToken = action.payload.access;
         state.refreshToken = action.payload.refresh;
         state.role = action.payload.role;
-        state.refreshInterval && clearInterval(state.refreshInterval);
-        state.refreshInterval = setInterval(() => {
-          state.dispatch(refreshToken());
-        }, 10000);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -112,6 +114,6 @@ const loginSlice = createSlice({
   },
 });
 
-export const { logoutUser, startTokenRefresh, stopTokenRefresh } =
+export const { logoutUser, stopTokenRefresh, setRefreshInterval } =
   loginSlice.actions;
 export default loginSlice.reducer;
