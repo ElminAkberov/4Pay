@@ -2,20 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
-export const widthdrawCreate = createAsyncThunk(
-  "widthdrawCreate",
+export const widthDrawsDownload = createAsyncThunk(
+  "widthDrawsDownload/fetch",
   async (formData, { rejectWithValue, getState, dispatch }) => {
     try {
       const state = getState();
       const token = state.login.accessToken;
-
 
       if (!token) {
         throw new Error("No access token available");
       }
 
       const response = await axios.post(
-        "https://dev.4pay.cash/api/v1/withdraws/create/",
+        "https://dev.4pay.cash/api/v1/withdraws/download/",
         formData,
         {
           headers: {
@@ -27,8 +26,6 @@ export const widthdrawCreate = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.error("API Error:", error.response);
-
       if (error.response?.status === 401) {
         try {
           await dispatch(refreshToken());
@@ -37,7 +34,7 @@ export const widthdrawCreate = createAsyncThunk(
           const newToken = state.login.accessToken;
 
           const retryResponse = await axios.post(
-            "https://dev.4pay.cash/api/v1/withdraws/create/",
+            "https://dev.4pay.cash/api/v1/withdraws/download/",
             formData,
             {
               headers: {
@@ -49,9 +46,7 @@ export const widthdrawCreate = createAsyncThunk(
 
           return retryResponse.data;
         } catch (refreshError) {
-          return rejectWithValue(
-            "Failed to refresh token: " + refreshError.message
-          );
+          return rejectWithValue("Failed to refresh token: " + refreshError.message);
         }
       }
 
@@ -67,23 +62,23 @@ const initialState = {
   data: null,
 };
 
-const widthDrawsCreateSlice = createSlice({
-  name: "widthdrawCreate",
+const widthDrawsDownloadSlice = createSlice({
+  name: "widthDrawsDownload",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(widthdrawCreate.pending, (state) => {
+      .addCase(widthDrawsDownload.pending, (state) => {
         state.loading = true;
         state.success = false;
         state.error = null;
       })
-      .addCase(widthdrawCreate.fulfilled, (state, action) => {
+      .addCase(widthDrawsDownload.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.data = action.payload;
       })
-      .addCase(widthdrawCreate.rejected, (state, action) => {
+      .addCase(widthDrawsDownload.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
         state.error = action.payload;
@@ -91,4 +86,4 @@ const widthDrawsCreateSlice = createSlice({
   },
 });
 
-export default widthDrawsCreateSlice.reducer;
+export default widthDrawsDownloadSlice.reducer;

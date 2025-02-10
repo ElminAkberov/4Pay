@@ -1,32 +1,60 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { refreshToken } from "../login/loginSlice";
 
 export const paymentsLists = createAsyncThunk(
-    "paymentList",
-    async (formData, { getState, rejectWithValue }) => {
-      try {
-        const state = getState(); 
-        const token = state.login.accessToken; 
-  
-        if (!token) {
-          throw new Error("No access token available");
-        }
-  
-        const response = await axios.get(
-          "https://dev.4pay.cash/api/v1/payments/",
-          {
-            params: formData,
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        return response.data;
-      } catch (error) {
-        return rejectWithValue(error.response.data);
+  "paymentList",
+  async (formData, { getState, rejectWithValue, dispatch }) => {
+    try {
+      const state = getState();
+      let token =
+        state?.login?.accessToken || localStorage.getItem("accessToken");
+
+      if (!token) {
+        throw new Error("No access token available");
       }
+
+      const response = await axios.get(
+        "https://dev.4pay.cash/api/v1/payments/",
+        {
+          params: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        try {
+          await dispatch(refreshToken());
+          const state = getState();
+          const newToken =
+            state?.login?.accessToken || localStorage.getItem("accessToken");
+
+          const retryResponse = await axios.get(
+            "https://dev.4pay.cash/api/v1/payments/",
+            {
+              params: formData,
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            }
+          );
+
+          return retryResponse.data;
+        } catch (refreshError) {
+          return rejectWithValue(
+            "Failed to refresh token: " + refreshError.message
+          );
+        }
+      }
+
+      return rejectWithValue(error.response?.data || error.message);
     }
-  );
+  }
+);
 
 const initialState = {
   loading: false,

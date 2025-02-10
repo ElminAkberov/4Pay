@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import widthDrawListReducer from "../features/widthdraws/widthDrawsListSlice";
+import widthDrawsDownloadReducer from "../features/widthdraws/widthDrawsDownloadSlice";
 import loginReducer from "../features/login/loginSlice";
 import paymentsListReducer from "../features/paymentList/paymentListSlice";
 import refillsListReducer from "../features/refillisList/refillsListSlice";
@@ -10,6 +11,7 @@ import accountReducer from "../features/account/accountSlice";
 export const store = configureStore({
   reducer: {
     widthdrawList: widthDrawListReducer,
+    widthdrawsDownload: widthDrawsDownloadReducer, 
     account: accountReducer,
     login: loginReducer,
     paymentList: paymentsListReducer,

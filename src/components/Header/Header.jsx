@@ -45,10 +45,10 @@ const Header = () => {
   return (
     <header className=" sticky top-0 right-0 w-full bg-[#1C2434] text-white py-3 px-3 shadow-xl z-[99999]">
       <div className="flex justify-between items-center ">
-        <div className="flex items-center">
+        <div className="flex items-center ml-2">
           <div
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-1 border border-[#ccc] rounded-sm mr-2"
+            className="p-1 lg:hidden  border border-[#ccc] rounded-sm mr-2"
           >
             <GrMenu size={25} color="#fff" />
           </div>

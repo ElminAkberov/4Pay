@@ -31,8 +31,7 @@ const Charts = () => {
   const paymentsByDays = data?.chart?.payments_by_days || [];
   const timelineDays = data?.chart?.timeline_days || [];
 
-  console.log("timelineDays:", timelineDays);
-  console.log("payments_by_days:", paymentsByDays);
+
 
   const extendedPayments = [...paymentsByDays];
   while (extendedPayments.length < timelineDays.length) {

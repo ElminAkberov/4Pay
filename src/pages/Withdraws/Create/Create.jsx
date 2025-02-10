@@ -6,7 +6,6 @@ const Create = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.widthdrawCreate);
 
-  console.log("stateee", state);
   const [formData, setFormData] = useState({
     amount_in_usdt: "",
     address: "",

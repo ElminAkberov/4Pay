@@ -13,10 +13,10 @@ export const refillsList = createAsyncThunk(
         throw new Error("No access token available");
       }
 
-      // Filtreleri API'ye uygun şekilde ekleyelim
-      const params = { page, ...filters };
+      const { start_time, end_time, ...filteredFilters } = filters || {}; 
 
-      console.log(params.filters);
+      const params = { page, ...filteredFilters };
+
       const response = await axios.get(
         "https://dev.4pay.cash/api/v1/appeals/",
         {
@@ -61,6 +61,8 @@ export const refillsList = createAsyncThunk(
     }
   }
 );
+
+
 
 const initialState = {
   loading: false,
