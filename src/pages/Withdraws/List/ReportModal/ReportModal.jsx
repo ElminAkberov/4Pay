@@ -22,7 +22,6 @@ const ReportModal = ({ report, setReport }) => {
 
   const handleDownload = async () => {
     const response = await dispatch(widthDrawsDownload(reportDate));
-
     if (response.meta.requestStatus === "fulfilled") {
       const blob = new Blob([response.payload], {
         type: "application/octet-stream",
@@ -43,7 +42,7 @@ const ReportModal = ({ report, setReport }) => {
       <div
         className={`${
           !report && "hidden"
-        } bg-[#151e30] fixed z-[999] h-[35vh] p-5 top-1/2 left-1/2 rounded-xl -translate-y-1/2 -translate-x-1/2`}
+        } bg-[#151e30] fixed z-[999] min-h-[35vh] p-5 top-1/2 left-1/2 rounded-xl -translate-y-1/2 -translate-x-1/2`}
       >
         <div className="flex w-full justify-end cursor-pointer">
           <MdClose color="#fff" size={30} onClick={() => setReport(false)} />
