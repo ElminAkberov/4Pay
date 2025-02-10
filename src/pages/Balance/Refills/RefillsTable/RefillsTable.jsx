@@ -6,12 +6,11 @@ import { refillsList } from "../../../../features/refillisList/refillsListSlice"
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FaAngleLeft, FaAngleRight, FaImages } from "react-icons/fa";
-import { TbMessageReportFilled } from "react-icons/tb";
 import ReportModal from "../ReportModal/ReportModal";
-import "./refillsTable.css"
+import "./refillsTable.css";
+import { FaSquarePollHorizontal } from "react-icons/fa6";
 const RefillsTable = () => {
   const [report, setReport] = useState(false);
-
   const [filters, setFilters] = useState({
     id: "",
     trader_name: "",
@@ -262,15 +261,18 @@ const RefillsTable = () => {
           Подать апелляцию
         </NavLink>
       </div>
-      <menu className="flex  flex-col overflow-hidden custom-table justify-center w-full max-[1200px]:px-10">
-        <div title="Report" className="w-full flex justify-end pr-5 max-[400px]:mt-5">
-          <TbMessageReportFilled
+      <menu  className="flex  flex-col overflow-hidden custom-table justify-center w-full max-[1200px]:px-10">
+        <div
+          title="Report"
+          className="w-full flex justify-end pr-5 max-[400px]:mt-5"
+        >
+          <FaSquarePollHorizontal
             size={30}
             className="cursor-pointer"
             color="#fff"
             onClick={() => setReport(!report)}
           />
-          <ReportModal setReport={setReport}  />
+          <ReportModal setReport={setReport} report={report} />
         </div>
         <StyledMenu>
           {loading ? (

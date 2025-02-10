@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const getAccountInfo = createAsyncThunk(
   "account/getAccountInfo",
   async (_, { rejectWithValue, getState, dispatch }) => {
@@ -9,15 +10,12 @@ export const getAccountInfo = createAsyncThunk(
       let accessToken = localStorage.getItem("accessToken");
       if (!accessToken) throw new Error("No access token available");
 
-      const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/accounts/me",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/accounts/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.data.is_active) {
         localStorage.setItem("role", response.data.role);
@@ -27,19 +25,17 @@ export const getAccountInfo = createAsyncThunk(
     } catch (error) {
       if (error.response?.status === 401) {
         try {
-          await dispatch(refreshToken()); 
+          await dispatch(refreshToken());
           const state = getState();
-          const newAccessToken = state?.login?.accessToken || localStorage.getItem("accessToken");
+          const newAccessToken =
+            state?.login?.accessToken || localStorage.getItem("accessToken");
 
-          const retryResponse = await axios.get(
-            "https://dev.4pay.cash/api/v1/accounts/me",
-            {
-              headers: {
-                Authorization: `Bearer ${newAccessToken}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const retryResponse = await axios.get(`${apiUrl}/accounts/me`, {
+            headers: {
+              Authorization: `Bearer ${newAccessToken}`,
+              "Content-Type": "application/json",
+            },
+          });
 
           if (retryResponse.data.is_active) {
             localStorage.setItem("role", retryResponse.data.role);
@@ -47,7 +43,9 @@ export const getAccountInfo = createAsyncThunk(
           }
           return retryResponse.data;
         } catch (refreshError) {
-          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+          return rejectWithValue(
+            "Failed to refresh token: " + refreshError.message
+          );
         }
       }
       return rejectWithValue(error.response?.data || "An error occurred");

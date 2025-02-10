@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const paymentsLists = createAsyncThunk(
   "paymentList",
   async (formData, { getState, rejectWithValue, dispatch }) => {
@@ -14,15 +15,12 @@ export const paymentsLists = createAsyncThunk(
         throw new Error("No access token available");
       }
 
-      const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/payments/",
-        {
-          params: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/payments/`, {
+        params: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return response.data;
     } catch (error) {
@@ -33,15 +31,12 @@ export const paymentsLists = createAsyncThunk(
           const newToken =
             state?.login?.accessToken || localStorage.getItem("accessToken");
 
-          const retryResponse = await axios.get(
-            "https://dev.4pay.cash/api/v1/payments/",
-            {
-              params: formData,
-              headers: {
-                Authorization: `Bearer ${newToken}`,
-              },
-            }
-          );
+          const retryResponse = await axios.get(`${apiUrl}/payments/`, {
+            params: formData,
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          });
 
           return retryResponse.data;
         } catch (refreshError) {

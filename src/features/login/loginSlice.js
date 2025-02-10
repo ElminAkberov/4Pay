@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const loginUser = createAsyncThunk(
   "login/loginUser",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "https://dev.4pay.cash/api/v1/auth/login/",
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axios.post(`${apiUrl}/auth/login/`, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
@@ -30,10 +27,7 @@ export const refreshToken = createAsyncThunk(
       const refresh = localStorage.getItem("refreshToken");
       if (!refresh) throw new Error("No refresh token available");
 
-      const response = await axios.post(
-        "https://dev.4pay.cash/api/v1/auth/refresh/",
-        { refresh }
-      );
+      const response = await axios.post(`${apiUrl}/auth/refresh/`, { refresh });
 
       localStorage.setItem("accessToken", response.data.access);
 
@@ -72,10 +66,11 @@ const loginSlice = createSlice({
         state.refreshInterval = null;
       }
     },
-    startTokenRefresh: (state) => {
+    startTokenRefresh: (state, action) => {
       if (!state.refreshInterval) {
         const intervalId = setInterval(() => {
-          state.refreshToken && refreshToken();
+          // Using dispatch to refresh token properly inside the interval
+          action.dispatch(refreshToken());
         }, 10000);
 
         state.refreshInterval = intervalId;
@@ -103,7 +98,8 @@ const loginSlice = createSlice({
         state.role = action.payload.role;
         state.refreshInterval && clearInterval(state.refreshInterval);
         state.refreshInterval = setInterval(() => {
-          refreshToken();
+          // Dispatching the refresh token action in the interval
+          state.dispatch(refreshToken());
         }, 10000);
       })
       .addCase(loginUser.rejected, (state, action) => {

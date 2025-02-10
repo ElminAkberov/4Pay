@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const widthdrawCreate = createAsyncThunk(
   "widthdrawCreate",
   async (formData, { rejectWithValue, getState, dispatch }) => {
@@ -9,13 +10,12 @@ export const widthdrawCreate = createAsyncThunk(
       const state = getState();
       const token = state.login.accessToken;
 
-
       if (!token) {
         throw new Error("No access token available");
       }
 
       const response = await axios.post(
-        "https://dev.4pay.cash/api/v1/withdraws/create/",
+        `${apiUrl}/withdraws/create/`,
         formData,
         {
           headers: {
@@ -37,7 +37,7 @@ export const widthdrawCreate = createAsyncThunk(
           const newToken = state.login.accessToken;
 
           const retryResponse = await axios.post(
-            "https://dev.4pay.cash/api/v1/withdraws/create/",
+            `${apiUrl}/withdraws/create/`,
             formData,
             {
               headers: {

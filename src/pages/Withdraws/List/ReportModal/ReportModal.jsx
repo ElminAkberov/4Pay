@@ -80,6 +80,7 @@ const ReportModal = ({ report, setReport }) => {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
       <div
+        onClick={() => setReport(false)}
         className={`${!report && "hidden"} fixed inset-0 bg-[#2320204d] z-20`}
       ></div>
     </>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Layout from "./layouts/Layout";
 import { ContextProvider } from "./Context/ContextProvider";
-import { refreshToken, startTokenRefresh } from "./features/login/loginSlice";
+import { refreshToken, startTokenRefresh, stopTokenRefresh } from "./features/login/loginSlice";
 
 import "./global.css";
 

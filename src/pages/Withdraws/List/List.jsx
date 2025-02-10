@@ -4,10 +4,9 @@ import { Column } from "primereact/column";
 import { useDispatch, useSelector } from "react-redux";
 import { widthdrawList } from "../../../features/widthdraws/widthDrawsListSlice";
 import { MdContentCopy } from "react-icons/md";
-import { TbMessageReportFilled } from "react-icons/tb";
 import ReportModal from "./ReportModal/ReportModal";
-import { message } from "antd";
 import Success from "../../../components/Success/Success";
+import { FaSquarePollHorizontal } from "react-icons/fa6";
 
 const List = () => {
   const [formData, setFormData] = useState({});
@@ -77,7 +76,7 @@ const List = () => {
     <menu className="flex flex-col overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10 ">
       <Success success={success["successInfo"]} message={success["message"]}/>
       <div title="Report" className="w-full flex justify-end pr-5 ">
-        <TbMessageReportFilled
+      <FaSquarePollHorizontal
           size={30}
           className="cursor-pointer"
           color="#fff"

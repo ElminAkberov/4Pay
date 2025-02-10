@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const refillsList = createAsyncThunk(
   "refillsList/fetch",
   async ({ page, filters }, { rejectWithValue, getState, dispatch }) => {
@@ -13,19 +14,16 @@ export const refillsList = createAsyncThunk(
         throw new Error("No access token available");
       }
 
-      const { start_time, end_time, ...filteredFilters } = filters || {}; 
+      const { start_time, end_time, ...filteredFilters } = filters || {};
 
       const params = { page, ...filteredFilters };
 
-      const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/appeals/",
-        {
-          params,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/appeals/`, {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.data) {
         throw new Error("Expected a valid response from the API");
@@ -40,15 +38,12 @@ export const refillsList = createAsyncThunk(
           const newToken =
             state?.login?.accessToken || localStorage.getItem("accessToken");
 
-          const retryResponse = await axios.get(
-            "https://dev.4pay.cash/api/v1/appeals/",
-            {
-              params,
-              headers: {
-                Authorization: `Bearer ${newToken}`,
-              },
-            }
-          );
+          const retryResponse = await axios.get(`${apiUrl}/appeals`, {
+            params,
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          });
           return retryResponse.data;
         } catch (refreshError) {
           return rejectWithValue(
@@ -61,8 +56,6 @@ export const refillsList = createAsyncThunk(
     }
   }
 );
-
-
 
 const initialState = {
   loading: false,

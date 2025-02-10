@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdClose } from "react-icons/md";
-import { widthDrawsDownload } from "../../../../features/widthdraws/widthDrawsDownloadSlice";
+import { refillsDownload } from "../../../../features/refillisList/refillsDownload";
 
 const ReportModal = ({ report, setReport }) => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.widthdrawsDownload);
+  const { loading, error } = useSelector((state) => state.refillsDownload);
 
   const [reportDate, setReportDate] = useState({
     start_date: "",
@@ -21,7 +21,7 @@ const ReportModal = ({ report, setReport }) => {
   };
 
   const handleDownload = async () => {
-    const response = await dispatch(widthDrawsDownload(reportDate));
+    const response = await dispatch(refillsDownload(reportDate));
 
     if (response.meta.requestStatus === "fulfilled") {
       const blob = new Blob([response.payload], {
@@ -80,6 +80,7 @@ const ReportModal = ({ report, setReport }) => {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
       <div
+      onClick={() => setReport(false)}
         className={`${!report && "hidden"} fixed inset-0 bg-[#2320204d] z-20`}
       ></div>
     </>

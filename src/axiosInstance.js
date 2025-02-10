@@ -1,11 +1,11 @@
 import axios from "axios";
 import store from "../store";
 import { refreshToken } from "../features/login/loginSlice";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
-  baseURL: "https://dev.4pay.cash/api/v1/",
+  baseURL: `${apiUrl}`,
 });
-
 
 api.interceptors.request.use(
   (config) => {
@@ -18,7 +18,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -28,7 +27,7 @@ api.interceptors.response.use(
       try {
         const response = await store.dispatch(refreshToken()).unwrap();
         localStorage.setItem("accessToken", response);
-        api.defaults.headers.Authorization = `Bearer ${response}`; // Global olarak güncelle
+        api.defaults.headers.Authorization = `Bearer ${response}`; 
         originalRequest.headers.Authorization = `Bearer ${response}`;
         return api(originalRequest);
       } catch (err) {
@@ -36,7 +35,7 @@ api.interceptors.response.use(
         return Promise.reject(err);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );

@@ -20,10 +20,11 @@ const Payment = () => {
           <button className="min-[992px]:min-w-[215px] w-full hover:bg-[#1C2434] hover:text-white py-2 px-5 border border-[#fff] text-[#fff] rounded-sm  my-4 duration-300 cursor-pointer">
             Найти
           </button>
-          <button className="min-[992px]:min-w-[215px] w-full text-center hover:bg-[#1C2434] hover:text-white py-2 px-5 border border-[#fff] text-[#fff] rounded-sm  my-4 duration-300 cursor-pointer">
-          <NavLink to={"/payments/create"}>Создать заявку</NavLink>
-
-          </button>
+          <NavLink to={"/payments/create"}>
+            <button className="min-[992px]:min-w-[215px] w-full text-center hover:bg-[#1C2434] hover:text-white py-2 px-5 border border-[#fff] text-[#fff] rounded-sm  my-4 duration-300 cursor-pointer">
+              <p>Создать заявку</p>
+            </button>
+          </NavLink>
         </div>
         <PaymentList />
       </div>

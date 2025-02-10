@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const widthdrawList = createAsyncThunk(
   "widthdrawList/fetch",
   async (formData, { rejectWithValue, getState, dispatch }) => {
@@ -13,15 +14,12 @@ export const widthdrawList = createAsyncThunk(
         throw new Error("No access token available");
       }
 
-      const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/withdraws/",
-        {
-          params: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/withdraws/`, {
+        params: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return response.data;
     } catch (error) {
@@ -30,21 +28,20 @@ export const widthdrawList = createAsyncThunk(
           await dispatch(refreshToken());
 
           const state = getState();
-          const newToken = state.login.accessToken; 
+          const newToken = state.login.accessToken;
 
-          const retryResponse = await axios.get(
-            "https://dev.4pay.cash/api/v1/withdraws/",
-            {
-              params: formData,
-              headers: {
-                Authorization: `Bearer ${newToken}`,
-              },
-            }
-          );
+          const retryResponse = await axios.get(`${apiUrl}/withdraws/`, {
+            params: formData,
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          });
 
           return retryResponse.data;
         } catch (refreshError) {
-          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+          return rejectWithValue(
+            "Failed to refresh token: " + refreshError.message
+          );
         }
       }
 

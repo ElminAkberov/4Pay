@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice"; 
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const dashboardThunk = createAsyncThunk(
   "dashboard",
   async (formData, { rejectWithValue, getState, dispatch }) => {
@@ -14,7 +15,7 @@ export const dashboardThunk = createAsyncThunk(
       }
 
       const response = await axios.get(
-        "https://dev.4pay.cash/api/v1/dashboard/",
+        `${apiUrl}/dashboard/`,
         {
           params: formData,
           headers: {
@@ -31,7 +32,7 @@ export const dashboardThunk = createAsyncThunk(
           const newToken = state?.login?.accessToken || localStorage.getItem("accessToken");
 
           const retryResponse = await axios.get(
-            "https://dev.4pay.cash/api/v1/dashboard/",
+            `${apiUrl}/dashboard/`,
             {
               params: formData,
               headers: {
