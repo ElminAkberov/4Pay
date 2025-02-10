@@ -8,6 +8,7 @@ import widthdrawsCreateReducer from "../features/widthdraws/widthDrawsCreateSlic
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import accountReducer from "../features/account/accountSlice";
 import refillsDownloadReducer from "../features/refillisList/refillsDownload"; 
+import paymentsErrorListReducer from "../features/paymentList/paymentErrorListSlice"; 
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     account: accountReducer,
     login: loginReducer,
     paymentList: paymentsListReducer,
+    paymentErrorList: paymentsErrorListReducer,
     refillsList: refillsListReducer,
     widthdrawCreate: widthdrawsCreateReducer,
     dashboard: dashboardReducer,
