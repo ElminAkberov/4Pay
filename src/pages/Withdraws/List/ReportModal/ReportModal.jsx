@@ -22,6 +22,7 @@ const ReportModal = ({ report, setReport }) => {
 
   const handleDownload = async () => {
     const response = await dispatch(widthDrawsDownload(reportDate));
+
     if (response.meta.requestStatus === "fulfilled") {
       const blob = new Blob([response.payload], {
         type: "application/octet-stream",
