@@ -6,6 +6,7 @@ import { IoChevronDown } from "react-icons/io5";
 import { MdAccountBalance, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import { Context } from "../../Context/ContextProvider";
+import { FiAlertCircle } from "react-icons/fi";
 
 const Sidebar = () => {
   const { isMenuOpen, setIsMenuOpen } = useContext(Context);
@@ -50,7 +51,7 @@ const Sidebar = () => {
     {
       title: "Ошибки с платежами",
       title_link: "/payments/payment-errors",
-      icon: <FaInbox size={16} />,
+      icon: <FiAlertCircle size={16} />,
     },
   ];
 
