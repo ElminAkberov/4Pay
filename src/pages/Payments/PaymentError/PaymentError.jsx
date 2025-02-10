@@ -3,11 +3,12 @@ import PaymentErrorTable from "./PaymentErrorTable/PaymentErrorTable";
 import { FaCaretDown } from "react-icons/fa";
 
 const PaymentError = () => {
+
   const [isDropdownOpen, setisDropdownOpen] = useState(false);
   return (
     <menu className="flex overflow-hidden items-center justify-center w-full p-[20px]">
       <div className="w-full px-2 ">
-        <div className="w-full grid min-[1400px]:grid-cols-5 max-[1400px]:flex-col gap-x-3 items-center">
+        {/* <div className="w-full grid min-[1400px]:grid-cols-5 max-[1400px]:flex-col gap-x-3 items-center">
           <div className="relative w-full ">
             <button
               onClick={() => setisDropdownOpen(!isDropdownOpen)}
@@ -70,7 +71,7 @@ const PaymentError = () => {
           <button className=" w-full hover:bg-[#3d4d60] text-white px-[12px] py-2 border border-[#fff] rounded-sm  mt-4 mb-4 duration-200 cursor-pointer">
             Скачать данные
           </button>
-        </div>
+        </div> */}
         <PaymentErrorTable />
       </div>
     </menu>

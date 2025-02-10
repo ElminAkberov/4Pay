@@ -4,7 +4,7 @@ const RefillsCreate = () => {
   return (
     <menu className="flex items-center justify-center w-full p-[20px] !max-w-[640px] !mx-auto">
       <form className="w-full">
-        <h2 className="nunito text-[31px] text-[#fff]">Закинуть USDT</h2>
+        <h2 className="nunito text-[31px] text-[#fff]">Создать апеляцию</h2>
         <fieldset className="w-full">
           <div className="mb-4 ">
             <label htmlFor="" className="block mb-2">
