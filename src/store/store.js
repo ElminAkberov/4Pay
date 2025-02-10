@@ -4,6 +4,7 @@ import loginReducer from "../features/login/loginSlice";
 import paymentsListReducer from "../features/paymentList/paymentListSlice"; 
 import refillsListReducer from "../features/refillisList/refillsListSlice"; 
 import widthdrawsCreateReducer from "../features/widthdraws/widthDrawsCreateSlice"; 
+import dashboardReducer from "../features/dashboard/dashboardSlice"; 
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,7 @@ export const store = configureStore({
     paymentList:paymentsListReducer,
     refillsList:refillsListReducer,
     widthdrawCreate:widthdrawsCreateReducer,
+    dashboard: dashboardReducer,
+
   },
 });

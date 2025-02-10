@@ -1,71 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { dashboardThunk } from "../../../features/dashboard/dashboardSlice";
 import ReactApexChart from "react-apexcharts";
 
 const Charts = () => {
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const time = {
-    payments_by_hours: [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Payment data
-    timeline_hours: [
-      "2025-02-01T14:34:23.968Z",
-      "2025-02-01T13:34:23.968Z",
-      "2025-02-01T12:34:23.968Z",
-      "2025-02-01T11:34:23.968Z",
-      "2025-02-01T10:34:23.968Z",
-      "2025-02-01T09:34:23.968Z",
-      "2025-02-01T08:34:23.968Z",
-      "2025-02-01T07:34:23.968Z",
-      "2025-02-01T06:34:23.968Z",
-      "2025-02-01T05:34:23.968Z",
-      "2025-02-01T04:34:23.968Z",
-      "2025-02-01T03:34:23.968Z",
-      "2025-02-01T02:34:23.968Z",
-      "2025-02-01T01:34:23.968Z",
-      "2025-02-01T00:34:23.968Z",
-      "2025-01-31T23:34:23.968Z",
-      "2025-01-31T22:34:23.968Z",
-      "2025-01-31T21:34:23.968Z",
-      "2025-01-31T20:34:23.968Z",
-      "2025-01-31T19:34:23.968Z",
-      "2025-01-31T18:34:23.968Z",
-      "2025-01-31T17:34:23.968Z",
-      "2025-01-31T16:34:23.968Z",
-      "2025-01-31T15:34:23.968Z",
-    ],
-  };
+  const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
 
-  const extendedPayments = [...time.payments_by_hours];
-  while (extendedPayments.length < time.timeline_hours.length) {
+  useEffect(() => {
+    dispatch(dashboardThunk(formData));
+  }, []);
+
+  const { data, loading } = useSelector((state) => state.dashboard);
+
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+
+  const paymentsByDays = data?.chart?.payments_by_days || [];
+  const timelineDays = data?.chart?.timeline_days || [];
+
+  console.log("timelineDays:", timelineDays);
+  console.log("payments_by_days:", paymentsByDays);
+
+
+  const extendedPayments = [...paymentsByDays];
+  while (extendedPayments.length < timelineDays.length) {
     extendedPayments.push(0);
   }
 
-  const formattedHours = time.timeline_hours.map((timestamp) => {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, "0");
 
-    if (hours === 0) {
-      return `${date.getDate()} ${months[date.getMonth()]}`;
-    } else {
-      return `${hours}:${minutes}`;
-    }
+  const formattedDays = timelineDays.map((dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()} ${months[date.getMonth()]}`;
   });
 
   const [state, setState] = React.useState({
     series: [
       {
+        name: "Payments",
         data: extendedPayments,
       },
     ],
@@ -91,7 +65,6 @@ const Charts = () => {
       },
       dataLabels: {
         enabled: false,
-
       },
       stroke: {
         curve: "smooth",
@@ -106,12 +79,12 @@ const Charts = () => {
       },
       grid: {
         row: {
-          colors: ["#1C2434", "transparent"], // Satırların arka plan rengini belirle
-          opacity: 0.5, // Saydamlık ayarı
+          colors: ["#1C2434", "transparent"],
+          opacity: 0.5,
         },
       },
       xaxis: {
-        categories: formattedHours,
+        categories: formattedDays, 
         labels: {
           rotate: -45,
           style: { colors: "#fff", fontSize: "12px" },
@@ -119,7 +92,7 @@ const Charts = () => {
       },
       yaxis: {
         min: 0,
-        max: 5,
+        max: Math.max(...extendedPayments) + 1, 
         tickAmount: 5,
         labels: {
           style: { colors: "#ffffff", fontSize: "12px" },
@@ -128,33 +101,71 @@ const Charts = () => {
       tooltip: {
         x: {
           formatter: function (_, { dataPointIndex }) {
-            const timestamp = time.timeline_hours[dataPointIndex];
-            const date = new Date(timestamp);
-
-            const hours = date.getHours();
-            const minutes = date.getMinutes().toString().padStart(2, "0");
-
+            const dateString = timelineDays[dataPointIndex];
+            const date = new Date(dateString);
             return `${date.getDate()}/${
-              date.getMonth() <= 10
-                ? "0" + (date.getMonth() + 1)
-                : date.getMonth() + 1
-            }/${date.getFullYear()} ${hours}:${minutes}`;
+              date.getMonth() + 1
+            }/${date.getFullYear()}`;
           },
         },
       },
     },
   });
 
+
+  const currency = data?.currency || [];
+  const balance = data?.balance || {};
+
+
+  const formatCurrencyData = (value) => {
+    return value === null || value === undefined ? "" : value;
+  };
+
+  
   return (
-    <div>
-      <div id="chart">
-        <ReactApexChart
-          options={state.options}
-          series={state.series}
-          type="line"
-          height={350}
-        />
+    <div style={{ padding: '20px' }}>
+
+<div id="chart">
+        {loading ? (
+          <p className="text-white">Loading...</p>
+        ) : (
+          <ReactApexChart
+            options={state.options}
+            series={state.series}
+            type="line"
+            height={350}
+          />
+        )}
       </div>
+      {/* Currency and Balance Display */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <div style={{ backgroundColor: '#1C2434', padding: '15px', borderRadius: '8px', flex: 1 }}>
+          <h4 style={{ color: '#fff' }}>Валюта</h4>
+          <div style={{ color: '#fff' }}>
+            {currency.map((item, index) => (
+              <div key={index} style={{ marginBottom: '10px' }}>
+                <strong>{item.name}</strong>:{" "}
+                {formatCurrencyData(item.total_amount)} (
+                {formatCurrencyData(item.completed_count)})
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ backgroundColor: '#1C2434', padding: '15px', borderRadius: '8px', flex: 1, marginLeft: '20px' }}>
+          <h4 style={{ color: '#fff' }}>Баланс</h4>
+          <div style={{ color: '#fff' }}>
+            {Object.keys(balance).map((key) => (
+              <div key={key} style={{ marginBottom: '10px' }}>
+                <strong>{key}</strong>: {balance[key].balance} {balance[key].symbol}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+ 
+      
     </div>
   );
 };
