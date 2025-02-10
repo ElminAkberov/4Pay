@@ -14,9 +14,19 @@ const Charts = () => {
   const { data, loading } = useSelector((state) => state.dashboard);
 
   const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
-
 
   const paymentsByDays = data?.chart?.payments_by_days || [];
   const timelineDays = data?.chart?.timeline_days || [];
@@ -24,12 +34,10 @@ const Charts = () => {
   console.log("timelineDays:", timelineDays);
   console.log("payments_by_days:", paymentsByDays);
 
-
   const extendedPayments = [...paymentsByDays];
   while (extendedPayments.length < timelineDays.length) {
     extendedPayments.push(0);
   }
-
 
   const formattedDays = timelineDays.map((dateString) => {
     const date = new Date(dateString);
@@ -84,7 +92,7 @@ const Charts = () => {
         },
       },
       xaxis: {
-        categories: formattedDays, 
+        categories: formattedDays,
         labels: {
           rotate: -45,
           style: { colors: "#fff", fontSize: "12px" },
@@ -92,7 +100,7 @@ const Charts = () => {
       },
       yaxis: {
         min: 0,
-        max: Math.max(...extendedPayments) + 1, 
+        max: Math.max(...extendedPayments) + 1,
         tickAmount: 5,
         labels: {
           style: { colors: "#ffffff", fontSize: "12px" },
@@ -112,20 +120,16 @@ const Charts = () => {
     },
   });
 
-
   const currency = data?.currency || [];
   const balance = data?.balance || {};
-
 
   const formatCurrencyData = (value) => {
     return value === null || value === undefined ? "" : value;
   };
 
-  
   return (
-    <div style={{ padding: '20px' }}>
-
-<div id="chart">
+    <div style={{ padding: "20px" }}>
+      <div id="chart">
         {loading ? (
           <p className="text-white">Loading...</p>
         ) : (
@@ -137,35 +141,114 @@ const Charts = () => {
           />
         )}
       </div>
-      {/* Currency and Balance Display */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div style={{ backgroundColor: '#1C2434', padding: '15px', borderRadius: '8px', flex: 1 }}>
-          <h4 style={{ color: '#fff' }}>Валюта</h4>
-          <div style={{ color: '#fff' }}>
-            {currency.map((item, index) => (
-              <div key={index} style={{ marginBottom: '10px' }}>
-                <strong>{item.name}</strong>:{" "}
-                {formatCurrencyData(item.total_amount)} (
-                {formatCurrencyData(item.completed_count)})
-              </div>
-            ))}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "20px",
+          marginBottom: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Общее количество заказов  */}
+        <div
+          style={{
+            backgroundColor: "#1C2434",
+            padding: "15px",
+            borderRadius: "8px",
+            flex: 1,
+          }}
+        >
+          <h4 style={{ color: "#fff" }}>Общее количество заказов</h4>
+          <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
+            {formatCurrencyData(
+              data?.currency?.reduce((sum, item) => sum + item.total_count, 0)
+            )}
           </div>
         </div>
 
-        <div style={{ backgroundColor: '#1C2434', padding: '15px', borderRadius: '8px', flex: 1, marginLeft: '20px' }}>
-          <h4 style={{ color: '#fff' }}>Баланс</h4>
-          <div style={{ color: '#fff' }}>
+        {/* Завершенные заказы  */}
+        <div
+          style={{
+            backgroundColor: "#1C2434",
+            padding: "15px",
+            borderRadius: "8px",
+            flex: 1,
+          }}
+        >
+          <h4 style={{ color: "#fff" }}>Завершенные заказы</h4>
+          <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
+            {formatCurrencyData(
+              data?.currency?.reduce(
+                (sum, item) => sum + item.completed_count,
+                0
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Общая сумма заказов  */}
+        <div
+          style={{
+            backgroundColor: "#1C2434",
+            padding: "15px",
+            borderRadius: "8px",
+            flex: 1,
+          }}
+        >
+          <h4 style={{ color: "#fff" }}>Общая сумма заказов</h4>
+          <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
+            {formatCurrencyData(
+              data?.currency?.reduce((sum, item) => sum + item.total_amount, 0)
+            )}
+          </div>
+        </div>
+
+        {/* Конверсия */}
+        <div
+          style={{
+            backgroundColor: "#1C2434",
+            padding: "15px",
+            borderRadius: "8px",
+            flex: 1,
+          }}
+        >
+          <h4 style={{ color: "#fff" }}>Конверсия</h4>
+          <div style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
+            {formatCurrencyData(
+              data?.currency?.reduce((sum, item) => sum + item.conversion, 0)
+            )}
+          </div>
+        </div>
+
+        {/* Баланс */}
+        <div
+          style={{
+            backgroundColor: "#1C2434",
+            padding: "15px",
+            borderRadius: "8px",
+            flex: "1",
+          }}
+        >
+          <h4 style={{ color: "#fff" }}>Баланс</h4>
+          <div style={{ color: "#fff" }}>
             {Object.keys(balance).map((key) => (
-              <div key={key} style={{ marginBottom: '10px' }}>
-                <strong>{key}</strong>: {balance[key].balance} {balance[key].symbol}
+              <div
+                key={key}
+                style={{
+                  marginBottom: "10px",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                }}
+              >
+                <strong>{key}</strong>: {balance[key].balance}{" "}
+                {balance[key].symbol}
               </div>
             ))}
           </div>
         </div>
       </div>
-
- 
-      
     </div>
   );
 };
