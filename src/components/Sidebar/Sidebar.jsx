@@ -20,6 +20,11 @@ const Sidebar = () => {
 
   const menus = [
     {
+      title: "Панель",
+      title_link: "/home",
+      icon: <MdHome size={16} />
+    },
+    {
       title: "Апеляции",
       title_link: "/refills",
       icon: <MdAccountBalance size={16} />,
@@ -79,20 +84,6 @@ const Sidebar = () => {
         <div className="mt-10">
           <h4 className="text-[#8A99AF] font-semibold mb-4">MENU</h4>
           <ul>
-            <li className="mb-2">
-              <NavLink
-                to="/"
-                onClick={() => handleClick("Главная")}
-                className={`${
-                  pathname === "/home" ? "bg-[#333A48]" : ""
-                } flex items-center justify-between hover:bg-[#333A48] text-[#dee4ee] py-3 px-4 cursor-pointer rounded-sm duration-300`}
-              >
-                <div className="flex items-center gap-x-1">
-                  <MdHome size={16} />
-                  <p className="font-medium">Главная</p>
-                </div>
-              </NavLink>
-            </li>
             {menus.map((menu, index) => {
               return (
                 <li key={index} className="mb-2">
