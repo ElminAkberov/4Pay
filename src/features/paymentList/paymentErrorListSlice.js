@@ -9,7 +9,8 @@ export const paymentsErrorList = createAsyncThunk(
   async (formData, { getState, rejectWithValue, dispatch }) => {
     try {
       const state = getState();
-      let token = state?.login?.accessToken || localStorage.getItem("accessToken");
+      let token =
+        state?.login?.accessToken || localStorage.getItem("accessToken");
 
       if (!token) {
         throw new Error("No access token available");
@@ -28,17 +29,23 @@ export const paymentsErrorList = createAsyncThunk(
         try {
           await dispatch(refreshToken());
           const newState = getState();
-          const newToken = newState?.login?.accessToken || localStorage.getItem("accessToken");
-          const retryResponse = await axios.get(`${apiUrl}/payments/payment-errors`, {
-            params: formData,
-            headers: {
-              Authorization: `Bearer ${newToken}`,
-            },
-          });
+          const newToken =
+            newState?.login?.accessToken || localStorage.getItem("accessToken");
+          const retryResponse = await axios.get(
+            `${apiUrl}/payments/payment-errors`,
+            {
+              params: formData,
+              headers: {
+                Authorization: `Bearer ${newToken}`,
+              },
+            }
+          );
 
           return retryResponse.data;
         } catch (refreshError) {
-          return rejectWithValue("Failed to refresh token: " + refreshError.message);
+          return rejectWithValue(
+            "Failed to refresh token: " + refreshError.message
+          );
         }
       }
 
@@ -51,7 +58,7 @@ const initialState = {
   loading: false,
   success: false,
   error: null,
-  data: null,
+  data: [],
 };
 
 const paymentsListSlice = createSlice({

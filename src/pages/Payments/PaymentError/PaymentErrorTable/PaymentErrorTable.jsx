@@ -13,7 +13,6 @@ const PaymentErrorTable = () => {
   useEffect(() => {
     dispatch(paymentsErrorList({}));
   }, [dispatch]);
-
   return (
     <div className="satoshi">
       {loading && <p>Loading...</p>}

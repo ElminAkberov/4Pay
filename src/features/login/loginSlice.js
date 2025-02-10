@@ -98,7 +98,6 @@ const loginSlice = createSlice({
         state.role = action.payload.role;
         state.refreshInterval && clearInterval(state.refreshInterval);
         state.refreshInterval = setInterval(() => {
-          // Dispatching the refresh token action in the interval
           state.dispatch(refreshToken());
         }, 10000);
       })
