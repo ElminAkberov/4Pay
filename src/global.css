@@ -42,3 +42,6 @@ input{
 input::placeholder{
   font-family: "Satoshi";
 }
+.p-datatable .p-column-header-content {
+  justify-content: center;
+}
