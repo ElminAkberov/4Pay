@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { refreshToken } from "../login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+
 export const widthdrawCreate = createAsyncThunk(
   "widthdrawCreate",
   async (formData, { rejectWithValue, getState, dispatch }) => {
@@ -24,7 +26,6 @@ export const widthdrawCreate = createAsyncThunk(
           },
         }
       );
-
       return response.data;
     } catch (error) {
       console.error("API Error:", error.response);
@@ -82,6 +83,9 @@ const widthDrawsCreateSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.data = action.payload;
+
+        const navigate = useNavigate();
+        navigate("/withdraws/list");
       })
       .addCase(widthdrawCreate.rejected, (state, action) => {
         state.loading = false;
