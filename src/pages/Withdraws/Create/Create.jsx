@@ -84,7 +84,7 @@ const Create = () => {
             </select>
           </div>
           <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer text-[white]">
-            Конвертировать
+            Создать
           </button>
         </fieldset>
       </form>
