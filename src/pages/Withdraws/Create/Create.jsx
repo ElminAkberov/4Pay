@@ -80,6 +80,7 @@ const Create = () => {
               value={formData.geo}
               onChange={handleChange}
             >
+              
               <option value="Россия">Россия</option>
             </select>
           </div>
