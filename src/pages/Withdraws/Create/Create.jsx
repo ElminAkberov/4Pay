@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { widthdrawCreate } from "../../../features/widthdraws/widthDrawsCreateSlice";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.widthdrawCreate);
+  const navigate = useNavigate();
+  const { success } = useSelector((state) => state.widthdrawCreate);
 
   const [formData, setFormData] = useState({
     amount_in_usdt: "",
@@ -31,11 +33,17 @@ const Create = () => {
     });
   };
 
+  useEffect(() => {
+    if (success) {
+      navigate("/withdraws/list");
+    }
+  }, [success, navigate]);
+
   return (
     <menu className="flex items-center justify-center w-full p-[20px]">
       <div className="min-md:w-1/3"></div>
       <form className="min-md:w-1/3" onSubmit={handleSubmit}>
-      <h2 className="nunito text-[31px] text-[#fff] mb-2">Создать вывод</h2>
+        <h2 className="nunito text-[31px] text-[#fff] mb-2">Создать вывод</h2>
         <fieldset>
           <div>
             <label htmlFor="id_amount_in_usdt" className="block">
