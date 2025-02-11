@@ -7,6 +7,7 @@ import { MdContentCopy } from "react-icons/md";
 import Success from "../../../components/Success/Success";
 import { FaSquarePollHorizontal } from "react-icons/fa6";
 import ReportModal from "./ReportModal/ReportModal";
+import { NavLink } from "react-router-dom";
 
 const List = () => {
   const [formData, setFormData] = useState({});
@@ -79,7 +80,13 @@ const List = () => {
   return (
     <menu className="flex flex-col overflow-hidden custom-table justify-center w-full p-5 max-[1200px]:px-10 ">
       <Success success={success["successInfo"]} message={success["message"]} />
-      <div title="Report" className="w-full flex justify-end pr-5 ">
+      <div title="Report" className="w-full flex justify-end pr-5 gap-x-2">
+        <NavLink
+          to={"/withdraws/create"}
+          className="min-[992px]:min-w-[215px]  text-center hover:bg-[#1C2434] hover:text-white py-2 px-5 border border-[#fff] text-[#fff] rounded-sm   duration-300 cursor-pointer"
+        >
+          Создать вывод
+        </NavLink>
         <FaSquarePollHorizontal
           size={30}
           className="cursor-pointer"
@@ -204,7 +211,7 @@ const List = () => {
             padding: "10px",
             width: "200px",
           }}
-          bodyStyle={{ textAlign: "center", padding: "20px", }}
+          bodyStyle={{ textAlign: "center", padding: "20px" }}
           body={(rowData) =>
             renderTruncatedText(rowData["Хэш транзакции"], 10, true)
           }

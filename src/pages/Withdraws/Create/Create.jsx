@@ -9,7 +9,7 @@ const Create = () => {
   const [formData, setFormData] = useState({
     amount_in_usdt: "",
     address: "",
-    geo: "Россия", 
+    geo: "Россия",
   });
 
   const handleChange = (e) => {
@@ -26,26 +26,26 @@ const Create = () => {
       setFormData({
         amount_in_usdt: "",
         address: "",
-        geo: "Россия", 
+        geo: "Россия",
       });
     });
-
   };
 
   return (
     <menu className="flex items-center justify-center w-full p-[20px]">
       <div className="min-md:w-1/3"></div>
       <form className="min-md:w-1/3" onSubmit={handleSubmit}>
+      <h2 className="nunito text-[31px] text-[#fff] mb-2">Создать вывод</h2>
         <fieldset>
           <div>
             <label htmlFor="id_amount_in_usdt" className="block">
               Сумма вывода в USDT:
             </label>
             <input
-              name="amount_in_usdt" 
+              name="amount_in_usdt"
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
               type="number"
-              value={formData.amount_in_usdt} 
+              value={formData.amount_in_usdt}
               onChange={handleChange}
             />
           </div>
@@ -54,9 +54,9 @@ const Create = () => {
               Address:
             </label>
             <input
-              name="address" 
+              name="address"
               className="bg-white w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
-              type="text" 
+              type="text"
               value={formData.address}
               onChange={handleChange}
             />
@@ -69,14 +69,13 @@ const Create = () => {
               name="geo"
               id="id_geo"
               className="bg-[#1a222c] text-[white] w-full placeholder:text-black px-[12px] py-[6px] rounded-sm border border-[#ced4da] form-input duration-200"
-              value={formData.geo} 
+              value={formData.geo}
               onChange={handleChange}
             >
               <option value="Россия">Россия</option>
-             
             </select>
           </div>
-          <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer text-[white]">
+          <button className="hover:bg-[#05256b] hover:text-white px-[12px] py-[6px] border border-[#05256b] rounded-sm w-full my-4 duration-200 cursor-pointer text-[white]">
             Конвертировать
           </button>
         </fieldset>

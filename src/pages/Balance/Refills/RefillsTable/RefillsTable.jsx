@@ -254,17 +254,17 @@ const RefillsTable = () => {
         >
           Применить фильтр
         </button>
-        <NavLink
+        {/* <NavLink
           to={"/refills/create"}
           className="hover:bg-[#0a58ca] text-center hover:border-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#fff] bg-[#05256b] rounded-sm w-full  duration-200 cursor-pointer"
         >
           Подать апелляцию
-        </NavLink>
+        </NavLink> */}
       </div>
       <menu  className="flex  flex-col overflow-hidden custom-table justify-center w-full max-[1200px]:px-10">
         <div
           title="Report"
-          className="w-full flex justify-end pr-5 max-[400px]:mt-5"
+          className="w-full flex justify-end pr-5 mt-5"
         >
           <FaSquarePollHorizontal
             size={30}
