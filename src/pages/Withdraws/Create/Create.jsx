@@ -39,7 +39,7 @@ const Create = () => {
         <fieldset>
           <div>
             <label htmlFor="id_amount_in_usdt" className="block">
-              Сумма вывода в USDT:
+               Сумма вывода в USDT:
             </label>
             <input
               name="amount_in_usdt"
