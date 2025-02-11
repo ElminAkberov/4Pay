@@ -83,9 +83,9 @@ const List = () => {
       <div title="Report" className="w-full flex justify-end pr-5 gap-x-2">
         <NavLink
           to={"/withdraws/create"}
-          className="hover:bg-[#0a58ca] text-center w-fit hover:border-[#0a58ca] hover:text-white px-[12px] py-[6px] border border-[#05256b] text-[#fff] bg-[#05256b] rounded-sm  duration-200 cursor-pointer"
+          className="min-[992px]:min-w-[215px]  text-center hover:bg-[#1C2434] hover:text-white py-2 px-5 border border-[#fff] text-[#fff] rounded-sm   duration-300 cursor-pointer"
         >
-          Подать апелляцию
+          Создать вывод
         </NavLink>
         <FaSquarePollHorizontal
           size={30}
