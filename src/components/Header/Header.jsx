@@ -18,8 +18,9 @@ const Header = () => {
     dispatch(getAccountInfo());
   }, [dispatch]);
 
-  const course = data?.balances?.map((balance) => balance.course);
-  const currency = data?.balances?.map((balance) => balance.code);
+  const course = data?.balances?.[0]?.course;
+  const currency = data?.balances?.[0]?.code;
+
   const role = localStorage.getItem("role");
   const username = localStorage.getItem("username");
   // const { success, accessToken } = useSelector((state) => state.login);

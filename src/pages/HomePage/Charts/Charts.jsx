@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dashboardThunk } from "../../../features/dashboard/dashboardSlice";
@@ -12,10 +11,7 @@ const Charts = () => {
     dispatch(dashboardThunk(formData));
   }, []);
 
-
-  
   const { data, loading } = useSelector((state) => state.dashboard);
-
 
   useEffect(() => {
     if (data?.chart) {
@@ -40,24 +36,33 @@ const Charts = () => {
       });
     }
   }, [data]);
-  
+
   const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const paymentsByDays = data?.chart?.payments_by_days || [];
   const timelineDays = data?.chart?.timeline_days || [];
 
-
-  const extendedPayments = timelineDays.map(date => {
-    const payment = paymentsByDays.find(p => p.date === date);
+  const extendedPayments = timelineDays.map((date) => {
+    const payment = paymentsByDays.find((p) => p.date === date);
     return payment ? payment.total_amount : 0;
   });
 
   console.log("paymentsByDays:", paymentsByDays);
-console.log("timelineDays:", timelineDays);
-console.log("extendedPayments:", extendedPayments);
+  console.log("timelineDays:", timelineDays);
+  console.log("extendedPayments:", extendedPayments);
 
   const formattedDays = timelineDays.map((dateString) => {
     const date = new Date(dateString);
@@ -131,7 +136,9 @@ console.log("extendedPayments:", extendedPayments);
           formatter: function (_, { dataPointIndex }) {
             const dateString = timelineDays[dataPointIndex];
             const date = new Date(dateString);
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            return `${date.getDate()}/${
+              date.getMonth() + 1
+            }/${date.getFullYear()}`;
           },
         },
       },
@@ -257,8 +264,7 @@ console.log("extendedPayments:", extendedPayments);
                   fontWeight: "bold",
                 }}
               >
-                <strong>{key}</strong>: {balance[key].balance}{" "}
-                {balance[key].symbol}
+                {balance[key].balance} {balance[key].symbol}
               </div>
             ))}
           </div>
