@@ -7,12 +7,12 @@ import {
   stopTokenRefresh,
 } from "../../features/login/loginSlice";
 import { useNavigate } from "react-router-dom";
+import Error from "../../components/Error/Error";
 
 const Login = () => {
-  const { success, accessToken } = useSelector((state) => state.login);
+  const { success, accessToken, error } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [login, setLogin] = useState({
     username: "",
     password: "",
@@ -45,6 +45,7 @@ const Login = () => {
 
   return (
     <>
+      {error && <Error message={"Входные данные неверны."} />}
       <h2 className="text-white text-5xl comfortaa p-16 text-center">
         <span className="text-5xl">4</span>Pay{" "}
         <sup className="text-[10px]">&copy;</sup>

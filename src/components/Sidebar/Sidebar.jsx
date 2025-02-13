@@ -33,7 +33,7 @@ const Sidebar = () => {
       title_link: "/payments/",
       icon: <FaInbox size={16} />,
     },
-    {
+    localStorage.getItem("role") !== "merchant" && {
       title: "Ошибки с платежами",
       title_link: "/payments/payment-errors",
       icon: <FiAlertCircle size={16} />,
