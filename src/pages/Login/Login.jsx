@@ -16,6 +16,7 @@ const Login = () => {
   const [login, setLogin] = useState({
     username: "",
     password: "",
+    otp: "",
   });
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const Login = () => {
               name="username"
               onChange={handleChange}
               value={login.username}
+              required
               className="w-full p-2 border rounded"
             />
           </div>
@@ -70,6 +72,19 @@ const Login = () => {
               type="password"
               onChange={handleChange}
               value={login.password}
+              required
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password">OTP</label>
+            <input
+              id="otp"
+              name="otp"
+              type="number"
+              onChange={handleChange}
+              value={login.otp}
+              required
               className="w-full p-2 border rounded"
             />
           </div>
